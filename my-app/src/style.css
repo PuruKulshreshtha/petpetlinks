@@ -1,0 +1,51 @@
+.popup {
+  position: fixed;
+  width: 45%;
+  height: 50%;
+  top: 200px;
+  left: 300px;
+  right: 0;
+  bottom: 0;
+  border-radius: 40px;
+  background-color: rgba(230, 138, 0, 1);
+}
+#rcorners1 {
+  border-radius: 25px;
+  background: #f3cf9d;
+  padding: 20px;
+  height: 200px;
+  margin: 40px;
+  margin-top: auto;
+  left: 0;
+  top: 10%;
+  width: 80%;
+  text-align: center;
+  font-size: 18px;
+}
+.topright {
+  position: absolute;
+  top: 8px;
+  right: 16px;
+}
+.popup\_inner {
+  left: 25%;
+  right: 25%;
+  top: 25%;
+  bottom: 25%;
+  margin: auto;
+  border-radius: 20px;
+  background: rgb(168, 167, 167);
+}
+
+input[type="text"],
+input[type="submit"],
+input[type="file"],
+input[type="checkbox"] select {
+  width: 50%;
+  height: 30px;
+  margin: 2px 2px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
