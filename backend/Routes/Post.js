@@ -2,7 +2,7 @@ let router = require("express").Router();
 //let timelineSchema = require("./schema_timeline");
 
 import multer from "multer";
-import mail from "../mail";
+
 //let multer = require("multer");
 //let categorySchema=require("./categorySchema");
 import Posts from "../Api/Post";
@@ -37,12 +37,7 @@ router.post("/timeline", upload.single("selectedFiles"), async (req, res) => {
   res.send(result);
 });
 
-//----------------------------All post in react
-router.get("/allPost", async (req, res) => {
-  let result = await Posts.allPost();
-  res.send(result);
-});
-//---------------------------All posts  while page load react native
+//---------------------------All posts  while page load react native and React
 router.post("/allPosts", async (req, res) => {
   // console.log("res", req.body);
   let result = await Posts.allPosts(req.body);
