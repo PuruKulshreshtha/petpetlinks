@@ -45,7 +45,7 @@ router.post("/allPosts", async (req, res) => {
 });
 //--------------------------Post count
 router.post("/postCount", async (req, res) => {
-  let result = await Posts.postCount();
+  let result = await Posts.postCount(req.body);
   //console.log("Result of category save is ", result);
   res.send(result);
 });

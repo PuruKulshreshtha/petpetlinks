@@ -61,7 +61,7 @@ class RightContiner extends React.Component {
           response => {
             let { skipCount, postCount, hasMore } = this.props;
 
-            console.log(">>>>>>>>>>Poast upload");
+            //console.log(">>>>>>>>>>Poast upload");
 
             let content = response.data.dataFromDatabase;
             store.dispatch(post(content, postCount, 0, true));
@@ -136,13 +136,37 @@ class RightContiner extends React.Component {
   };
 
   changeCategory = category => {
-    let { onChangeCategory, contentCopy } = this.props;
+    let postCounts = 0;
+    // console.log(category);
+    let postby = { categoryId: category };
+    callApi({ url: ROUTES.POST_COUNT, method: "POST", data: postby }).then(
+      resp => {
+        postCounts = resp.data.count;
+        console.log(">>>>", postCounts);
+        let { skipCount, limitCount } = this.props;
 
-    let categorySearch = filter(contentCopy, user => {
-      return user.categoryId.category === category;
-    });
+        if (skipCount > postCounts) {
+          store.dispatch(post([], postCounts, skipCount, false));
+          return;
+        } else {
+          let data = {
+            skipCount: skipCount,
+            limitCount: limitCount,
+            category: { categoryId: category }
+          };
 
-    onChangeCategory(categorySearch);
+          console.log(">>>>>DTAA IN category", data);
+          callApi({ url: ROUTES.ALL_POSTS, method: "POST", data: data }).then(
+            response => {
+              const content = response.data.dataFromDatabase;
+              console.log("Content", content);
+
+              store.dispatch(post(content, postCounts, 0, true));
+            }
+          );
+        }
+      }
+    );
   };
   componentDidMount() {
     if (localStorage.getItem("ID") !== null) {
@@ -199,7 +223,7 @@ class RightContiner extends React.Component {
                   ? this.props.categoriesData.map((data, index) => {
                       return (
                         <li key={index}>
-                          <a onClick={() => this.changeCategory(data.category)}>
+                          <a onClick={() => this.changeCategory(data._id)}>
                             <span className="list_icon">
                               <img src="/images/icon_03.png" alt="up" />
                             </span>{" "}
@@ -272,6 +296,7 @@ const mapStateToProps = (state, ownProps) => {
     hasMore: state.post.hasMore,
     categoryStatus: state.category.categoryStatus,
     skipCount: state.post.skipCount,
+    limitCount: state.post.limitCount,
     postCount: state.post.postCount
   };
 };

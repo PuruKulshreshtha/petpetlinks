@@ -12,7 +12,7 @@ import Main_index from "./Main_Index";
 import Main_timeline from "./Main_timeline";
 import RightContiner from "./rightContainer";
 import InfiniteScroll from "react-infinite-scroller";
-//import InfiniteScroll from "react-infinite-scroll-component";
+
 const { ROUTES, SERVER_URL } = config;
 class Timeline extends React.Component {
   constructor(props) {
@@ -40,45 +40,48 @@ class Timeline extends React.Component {
   loadMorePosts = () => {
     //console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>Load more ");
     let postCounts = 0;
+    let postby = {};
+    callApi({ url: ROUTES.POST_COUNT, method: "POST", data: postby }).then(
+      resp => {
+        postCounts = resp.data.count;
 
-    callApi({ url: ROUTES.POST_COUNT, method: "POST" }).then(resp => {
-      postCounts = resp.data.count;
+        let { skipCount, limitCount } = this.props;
 
-      let { skipCount, limitCount } = this.props;
+        if (skipCount > postCounts) {
+          store.dispatch(post([], postCounts, skipCount, false));
+          return;
+        } else {
+          let data = {
+            skipCount: skipCount,
+            limitCount: limitCount,
+            category: null
+          };
 
-      if (skipCount > postCounts) {
-        store.dispatch(post([], postCounts, skipCount, false));
-        return;
-      } else {
-        let data = {
-          skipCount: skipCount,
-          limitCount: limitCount
-        };
+          // this.setState({ skipCount: skipCount + limitCount }, () => {
+          //   console.log(">>", this.state.skipCount);
+          // });
+          callApi({ url: ROUTES.ALL_POSTS, method: "POST", data: data }).then(
+            response => {
+              const content = response.data.dataFromDatabase;
+              // console.log("Content", content);
 
-        // this.setState({ skipCount: skipCount + limitCount }, () => {
-        //   console.log(">>", this.state.skipCount);
-        // });
-        callApi({ url: ROUTES.ALL_POSTS, method: "POST", data: data }).then(
-          response => {
-            const content = response.data.dataFromDatabase;
-            console.log("Content", content);
+              //let contentCopy = content;
+              //let ans = response.data.status;
+              store.dispatch(post(content, postCounts, skipCount, true));
+              // this.setState({
+              //   content: [...this.state.content, ...content],
 
-            //let contentCopy = content;
-            //let ans = response.data.status;
-            store.dispatch(post(content, postCounts, skipCount, true));
-            // this.setState({
-            //   content: [...this.state.content, ...content],
-
-            //   postCounts,
-            //   hasMoreItems: true,
-            //   //contentCopy: [...this.state.contentCopy, ...content],
-            //   skipCount: skipCount + limitCount
-            // });
-            // console.log(">>>>>>>>>.Content alll", this.state.content);
-          }
-        );
+              //   postCounts,
+              //   hasMoreItems: true,
+              //   //contentCopy: [...this.state.contentCopy, ...content],
+              //   skipCount: skipCount + limitCount
+              // });
+              // console.log(">>>>>>>>>.Content alll", this.state.content);
+            }
+          );
+        }
       }
-    });
+    );
   };
 
   // allPosts = () => {
@@ -115,7 +118,7 @@ class Timeline extends React.Component {
   }
   render() {
     let { content, hasMoreItems } = this.props;
-    console.log("rendering");
+    // console.log("rendering");
     return (
       <div>
         <title>Home</title>
@@ -126,6 +129,7 @@ class Timeline extends React.Component {
               // onChangeCategory={newData => {
               //   this.setState({ content: newData });
               // }}
+              loadMore={this.loadMorePosts}
               history={this.props.history}
             />
 

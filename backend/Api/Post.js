@@ -43,9 +43,10 @@ module.exports = {
       });
     });
   },
-  postCount: () => {
+  postCount: data => {
+    console.log(">data in post api", data);
     return new Promise((res, rej) => {
-      timelineSchema.countDocuments().then(response => {
+      timelineSchema.countDocuments(data).then(response => {
         //console.log("Res ", response);
         res({ count: response });
       });
@@ -54,12 +55,20 @@ module.exports = {
 
   allPosts: data => {
     return new Promise((res, rej) => {
+      let categoryId = {};
+      if (data.category === null) {
+        categoryId = {};
+        console.log("notalllll ", categoryId);
+      } else {
+        categoryId = data.category;
+        console.log("Yess All", categoryId);
+      }
       //console.log(
       //   "hello----------------------------------------------------------------",
       //   data
       // );
       timelineSchema
-        .find({})
+        .find(categoryId)
         .populate({ path: "author", model: "User" })
         .populate({ path: "categoryId", model: "Category" })
         .skip(data.skipCount)
