@@ -1,5 +1,5 @@
 const nodemailer = require("nodemailer");
-
+import { Email, Password } from "./credential";
 const sendMail = async data => {
   console.log("data in mail", data);
 
@@ -10,8 +10,8 @@ const sendMail = async data => {
     port: 587,
     secure: false, // true for 465, false for other ports
     auth: {
-      user: "Enter Your Email",
-      pass: "Enter your password"
+      user: Email,
+      pass: Password
     }
   });
 
