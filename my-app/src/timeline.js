@@ -134,24 +134,18 @@ class Timeline extends React.Component {
             />
 
             <div className="content_lft">
-              {/* {this.props.match.path === "/timeline" ? (
+              {this.props.match.path === "/timeline" ? (
                 <Main_timeline
                   contentCopy={this.state.contentCopy}
                   history={this.props.history}
-                  onChangeMyAlbums={newData => {
-                    this.setState({ content: newData });
-                  }}
                 />
-              ) : null} */}
-              {/* {this.props.match.path === "/index" ? (
+              ) : null}
+              {this.props.match.path === "/index" ? (
                 <Main_index
                   contentCopy={this.state.contentCopy}
                   history={this.props.history}
-                  onChangeFilter={newData => {
-                    this.setState({ content: newData });
-                  }}
                 />
-              ) : null} */}
+              ) : null}
               <div className="contnt_2">
                 <div>
                   <h3>{this.state.status}</h3>

@@ -14,7 +14,7 @@ const callApi = ({
   }
 }) => {
   return new Promise((resolve, reject) => {
-    // console.log('data is#######', url, data);
+    //console.log("data is#######", url, data);
     // console.log("HIstory", history);
     if (method === "get" && !isEmpty(data)) {
       let queryParams = encodeURI(JSON.stringify(data));

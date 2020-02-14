@@ -7,12 +7,13 @@ var bodyParser = require("body-parser");
 var mongoose = require("mongoose");
 var cors = require("cors");
 var User = require("./Routes/User");
-var jwt = require("jsonwebtoken");
-
+var Pic = require("./Routes/ProfilePic");
 var Posts = require("./Routes/Post");
+//
 app.use(cors());
 
 app.use(express.static("Uploads"));
+app.use(express.static("ProfilePics"));
 
 //useUnifiedTopology: true
 
@@ -40,6 +41,7 @@ app.use(bodyParser.json());
 app.use("/", User);
 
 app.use("/time", Posts);
+app.use("/pic", Pic);
 
 var server = app.listen(8088, () => {
   var host = server.address().address;

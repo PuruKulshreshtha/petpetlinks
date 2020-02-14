@@ -1,6 +1,8 @@
 export default {
   SERVER_URL: "http://192.168.100.175:8088",
   ROUTES: {
+    PROFILE_PIC: "pic/profile",
+    DEFAULT_PIC: "pic/default",
     LOGIN: "login",
     LIKE: "time/like",
     DEFAULT_CATEGORY: "time/defaultCat",

@@ -1,38 +1,90 @@
-import React from "react";
-import { filter } from "lodash";
-
+import React, { useImperativeHandle } from "react";
+import config from "./config";
+import callApi from "./api";
+import Dropzone from "react-dropzone";
+const { ROUTES, SERVER_URL } = config;
 class Main_timeline extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
-    console.log(">>>>>>>>>>>>>>>>>>>", props);
+    this.state = {
+      profilePic: "123.jpg"
+    };
+    //console.log(">>>>>>>>>>>>>>>>>>>", props);
   }
+  getFileExtension = filename => {
+    return /[.]/.exec(filename) ? /[^.]+$/.exec(filename)[0] : undefined;
+  };
+  defaultProfile = () => {
+    let data = {
+      userId: localStorage.getItem("ID")
+    };
+    callApi({ url: ROUTES.DEFAULT_PIC, data: data, method: "POST" }).then(
+      response => {
+        // console.log("Default", response.data);
+        let profilePic = response.data.profilePic;
+        //console.log(">>>>>>????????>>>>>>>>>", profilePic);
+        this.setState({ profilePic: profilePic });
+      }
+    );
+  };
+  profileChange = pic => {
+    //console.log(">>>>>>>>>>>>>..profileChange", pic[0]);
+    let fd = new FormData();
 
-  profileChange = () => {
-    console.log(">>>>>>>>>>>>>..profileChange");
+    let extension = this.getFileExtension(pic[0].name);
+    //console.log(">>>>>>e", extension);
+    if (
+      extension === "jpg" ||
+      extension === "png" ||
+      extension === "jpeg" ||
+      extension === "gif"
+    ) {
+      fd.append("profilePic", pic[0]);
+      fd.append("userId", localStorage.getItem("ID"));
+      let ld = {
+        profilePic: pic[0],
+        userId: localStorage.getItem("ID")
+      };
+
+      callApi({
+        url: ROUTES.PROFILE_PIC,
+        data: fd,
+        method: "POST"
+      }).then(response => {
+        this.defaultProfile();
+        //console.log("HEY ", response);
+      });
+    } else {
+      alert("Invalid File format");
+    }
   };
+
   myUploads = () => {
-    //console.log("My uploads")
-    let { onChangeMyAlbums, contentCopy } = this.props;
-    //console.log("name",this.props.state)
-    let mail = localStorage.getItem("mail");
-    //console.log("mail is", mail);
-    //console.log("fdshfshdf",contentCopy);
-    document.getElementById("m").setAttribute("class", "active");
-    document.getElementById("t").setAttribute("class", "");
-    let myUploadsData = filter(contentCopy, user => {
-      return user.author.email === mail;
-    });
-    //console.log("myupkloadas",myUploadsData);
-    onChangeMyAlbums(myUploadsData);
-    // console.log("my uploadas data ",myUploadsData);
-    this.setState({ content: myUploadsData });
+    console.log("My uploads ????????????????");
   };
+  // myUploads = () => {
+  //   //console.log("My uploads")
+  //   let { onChangeMyAlbums, contentCopy } = this.props;
+  //   //console.log("name",this.props.state)
+  //   let mail = localStorage.getItem("mail");
+  //   //console.log("mail is", mail);
+  //   //console.log("fdshfshdf",contentCopy);
+  //   document.getElementById("m").setAttribute("class", "active");
+  //   document.getElementById("t").setAttribute("class", "");
+  //   let myUploadsData = filter(contentCopy, user => {
+  //     return user.author.email === mail;
+  //   });
+  //   //console.log("myupkloadas",myUploadsData);
+  //   onChangeMyAlbums(myUploadsData);
+  //   // console.log("my uploadas data ",myUploadsData);
+  //   this.setState({ content: myUploadsData });
+  // };
   componentDidMount() {
     // console.log(this.state.Error);
 
     if (localStorage.getItem("ID") != null) {
       this.props.history.push("/timeline");
+      this.defaultProfile();
       //
       //this.defaultCategory();
       //this.allPosts();
@@ -59,12 +111,41 @@ class Main_timeline extends React.Component {
           <div className="timeline_div">
             <div className="timeline_div1">
               <div className="profile_pic">
-                <a onClick={this.profileChange}>
-                  <img src="images/123.jpg" alt="" />
+                <a>
+                  <Dropzone
+                    onDrop={acceptedFiles => this.profileChange(acceptedFiles)}
+                  >
+                    {({ getRootProps, getInputProps }) => (
+                      <section>
+                        <div {...getRootProps()}>
+                          <input {...getInputProps()} />
+                          <img
+                            src={`${SERVER_URL}/${this.state.profilePic}`}
+                            alt=""
+                          />
+                        </div>
+                      </section>
+                    )}
+                  </Dropzone>
+                  {/* <img src="images/123.jpg" alt="" /> */}
                 </a>
-                {/* <div className="profile_text">
-                        <a >Change Profile Pic</a>
-                      </div> */}
+                <div className="profile_text">
+                  {/* <Dropzone
+                    onDrop={acceptedFiles => console.log(acceptedFiles)}
+                  >
+                    {({ getRootProps, getInputProps }) => (
+                      <section>
+                        <div {...getRootProps()}>
+                          <input {...getInputProps()} />
+                          <img src="images/123.jpg" alt="" />
+                        </div>
+                      </section>
+                    )}
+                  </Dropzone> */}
+                  {/* <a onClick={() => this.uploadProfilePic}>
+                    Change Profile Pic
+                  </a> */}
+                </div>
               </div>
               <div className="profile_info">
                 <div className="edit_div">
