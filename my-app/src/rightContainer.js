@@ -235,11 +235,7 @@ class RightContiner extends React.Component {
                   : null}
 
                 <li>
-                  <a
-                    onClick={() => {
-                      this.props.allPost();
-                    }}
-                  >
+                  <a>
                     <span className="list_icon">
                       <img src="/images/icon_05.png" alt="up" />
                     </span>{" "}
