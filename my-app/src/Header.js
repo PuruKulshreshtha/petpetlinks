@@ -150,17 +150,25 @@ class Header extends React.Component {
                   </div>
                   <ul
                     className="dropdown-menu"
+                    style={{ borderRadius: 10 }}
                     role="menu"
                     aria-labelledby="dLabel"
                   >
                     <li>
-                      <a tabIndex={-1}>My Profile</a>
+                      <a style={{ borderRadius: 10 }} tabIndex={-1}>
+                        My Profile
+                      </a>
                     </li>
                     <li>
-                      <a tabIndex={-1}>Message Box</a>
+                      <a style={{ borderRadius: 10 }} tabIndex={-1}>
+                        Message Box
+                      </a>
                     </li>
                     <li onClick={() => this.logout()}>
-                      <Link to="/login"> Logout</Link>
+                      <Link style={{ borderRadius: 10 }} to="/login">
+                        {" "}
+                        Logout
+                      </Link>
                     </li>
                     <li className="divider" />
                     <li>
