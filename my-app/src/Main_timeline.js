@@ -82,7 +82,7 @@ class Main_timeline extends React.Component {
   componentDidMount() {
     // console.log(this.state.Error);
 
-    if (localStorage.getItem("ID") != null) {
+    if (localStorage.getItem("ID") !== null) {
       this.props.history.push("/timeline");
       this.defaultProfile();
       //
@@ -93,6 +93,10 @@ class Main_timeline extends React.Component {
     }
   }
   render() {
+    let name = localStorage.getItem("username");
+    if (name !== null) {
+      name = name.toUpperCase();
+    }
     return (
       <div>
         <div className="contnt_1">
@@ -156,10 +160,8 @@ class Main_timeline extends React.Component {
                 <div className="profile_form">
                   <ul>
                     <li>
-                      <div className="div_name1">Name :</div>
-                      <div className="div_name2">
-                        {localStorage.getItem("username")}
-                      </div>
+                      <div className="div_name2">Name : {name}</div>
+                      <div className="div_name2"></div>
                     </li>
                     <li>
                       <div className="div_name1">{/*Sex :*/}</div>

@@ -108,7 +108,7 @@ class Timeline extends React.Component {
   // };
 
   componentDidMount() {
-    if (localStorage.getItem("ID") != null) {
+    if (localStorage.getItem("ID") !== null) {
       if (this.props.match.path === "/") {
         this.props.history.push("/index");
       }

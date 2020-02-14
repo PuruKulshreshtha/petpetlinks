@@ -247,7 +247,7 @@ class RightContiner extends React.Component {
           </div>
           <div className="rght_cate">
             <div className="rght_cate_hd" id="opn_cat_bg">
-              Featured
+              Featured Post
             </div>
             <div className="sub_dwn">
               {/* {this.state.featuredPost
