@@ -1,6 +1,5 @@
 import React from "react";
 import Popup from "./popup";
-import { filter, get } from "lodash";
 import config from "./config";
 import callApi from "./api";
 import FEATURED_POST from "./Component/featured";
@@ -8,7 +7,7 @@ import { connect } from "react-redux";
 import { post } from "./Redux/Action/postAction";
 import { categories } from "./Redux/Action/categoryAction";
 import store from "./Redux/store";
-const { ROUTES, SERVER_URL } = config;
+const { ROUTES } = config;
 
 class RightContiner extends React.Component {
   constructor(props) {
@@ -59,7 +58,7 @@ class RightContiner extends React.Component {
 
         callApi({ method: "POST", url: ROUTES.UPLOAD_POST, data: fd }).then(
           response => {
-            let { skipCount, postCount, hasMore } = this.props;
+            let { postCount } = this.props;
 
             //console.log(">>>>>>>>>>Poast upload");
 
@@ -127,7 +126,12 @@ class RightContiner extends React.Component {
             required
           />
           <a onClick={this.handleCategory}>
-            <img height="15px" width="20px" src="/images/close.ico"></img>
+            <img
+              height="15px"
+              width="20px"
+              alt="close icon"
+              src="/images/close.ico"
+            ></img>
           </a>
           <input type="submit" />
         </form>

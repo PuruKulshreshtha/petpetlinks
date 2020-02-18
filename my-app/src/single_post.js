@@ -1,10 +1,8 @@
 import React from "react";
 import config from "./config";
-import { get } from "lodash";
 import Post from "./Component/post";
 import callApi from "./api";
 import RightContiner from "./rightContainer";
-import LikeButton from "./Component/like";
 const { ROUTES } = config;
 
 class SinglePost extends React.Component {
@@ -92,7 +90,6 @@ class SinglePost extends React.Component {
 
   render() {
     let { content } = this.state;
-    let { requiredDateString } = this.state;
 
     return (
       <div>

@@ -67,11 +67,7 @@ class Main_Index extends React.Component {
           <div className="post_list">
             <ul>
               <li>
-                <a
-                  onClick={() => {
-                    this.latest_first();
-                  }}
-                >
+                <a>
                   <span className="list_img">
                     <img src="images/img_1.png" />
                   </span>
@@ -79,11 +75,7 @@ class Main_Index extends React.Component {
                 </a>
               </li>
               <li>
-                <a
-                  onClick={() => {
-                    this.Oldest_First();
-                  }}
-                >
+                <a>
                   <span className="list_img">
                     <img src="images/img_2.png" />
                   </span>
@@ -99,11 +91,7 @@ class Main_Index extends React.Component {
                   </a>
                 </li>*/}
               <li>
-                <a
-                  onClick={() => {
-                    this.mostclicked();
-                  }}
-                >
+                <a>
                   <span className="list_img">
                     <img src="images/img_4.png" />
                   </span>
@@ -111,7 +99,7 @@ class Main_Index extends React.Component {
                 </a>
               </li>
               <li>
-                <a onClick={() => this.mostcommented()}>
+                <a>
                   <span className="list_img">
                     <img src="images/img_5.png" />
                   </span>
