@@ -183,7 +183,14 @@ class Main_timeline extends React.Component {
             <div className="timeline_div2">
               <ul>
                 <li>
-                  <a id="t" className="active">
+                  <a
+                    id="t"
+                    className="active"
+                    onClick={() => {
+                      document.getElementById("t").className = "active";
+                      document.getElementById("m").className = "";
+                    }}
+                  >
                     Timeline{" "}
                   </a>
                 </li>
@@ -199,6 +206,8 @@ class Main_timeline extends React.Component {
                 <li>
                   <a
                     onClick={() => {
+                      document.getElementById("m").className = "active";
+                      document.getElementById("t").className = "";
                       this.myUploads();
                     }}
                     id="m"
