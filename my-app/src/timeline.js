@@ -3,6 +3,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { post, UpdateHasMore } from "./Redux/Action/postAction";
 import store from "./Redux/store";
+import { get } from "lodash";
 // import LIKEBUTTON from "./Component/like";
 // import { Link } from "react-router-dom";
 import Post from "./Component/post";
@@ -37,37 +38,41 @@ class Timeline extends React.Component {
     };
   }
 
-  loadMorePosts = () => {
-    //console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>Load more ");
+  loadMorePosts = ({
+    postBy = this.props.categoryId,
+    skipCount = this.props.skipCount,
+    limitCount = this.props.limitCount,
+    categoryId = this.props.categoryId
+  }) => {
+    // console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>Load more ", postBy);
     let postCounts = 0;
-    let postby = {};
-    callApi({ url: ROUTES.POST_COUNT, method: "POST", data: postby }).then(
+
+    callApi({ url: ROUTES.POST_COUNT, method: "POST", data: postBy }).then(
       resp => {
         postCounts = resp.data.count;
-
-        let { skipCount, limitCount } = this.props;
-
+        // console.log(">>>>>>>>>", postCounts);
+        //console.log(">>>>>>>>>>>>>>>>>?????", skipCount, limitCount);
+        //store.dispatch(post([], postCounts, skipCount, false));
         if (skipCount > postCounts) {
-          store.dispatch(post([], postCounts, skipCount, false));
+          store.dispatch(post([], postCounts, skipCount, false, postBy));
           return;
         } else {
           let data = {
             skipCount: skipCount,
             limitCount: limitCount,
-            category: null
+            categoryId: get(postBy, "categoryId", null)
           };
-
+          // console.log("?????????????????????????????????????", data);
           // this.setState({ skipCount: skipCount + limitCount }, () => {
           //   console.log(">>", this.state.skipCount);
           // });
           callApi({ url: ROUTES.ALL_POSTS, method: "POST", data: data }).then(
             response => {
               const content = response.data.dataFromDatabase;
-              // console.log("Content", content);
 
-              //let contentCopy = content;
-              //let ans = response.data.status;
-              store.dispatch(post(content, postCounts, skipCount, true));
+              store.dispatch(
+                post(content, postCounts, skipCount, true, postBy)
+              );
               // this.setState({
               //   content: [...this.state.content, ...content],
 
@@ -187,7 +192,8 @@ const mapStateToProps = (state, ownProps) => {
     content: state.post.postData,
     limitCount: state.post.limitCount,
     skipCount: state.post.skipCount,
-    hasMoreItems: state.post.hasMore
+    hasMoreItems: state.post.hasMore,
+    categoryId: state.post.categoryId
   };
 };
 export default connect(mapStateToProps)(Timeline);

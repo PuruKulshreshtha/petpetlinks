@@ -1,12 +1,13 @@
 import { AllPost } from "../Constant";
 
-export const post = (postData, postCount, skipCount, hasMore) => {
+export const post = (postData, postCount, skipCount, hasMore, categoryId) => {
   //console.log(">>>>>>>>>>>>>>", hasMore);
   return {
     type: AllPost,
     postData: postData,
     postCount: postCount,
     skipCount: skipCount,
-    hasMore: hasMore
+    hasMore: hasMore,
+    categoryId: categoryId
   };
 };

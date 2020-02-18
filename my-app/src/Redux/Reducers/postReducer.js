@@ -5,7 +5,8 @@ const initialState = {
   postData: [],
   skipCount: 0,
   limitCount: 2,
-  hasMore: true
+  hasMore: true,
+  categoryId: {}
 };
 
 const postReducer = (state = initialState, action) => {
@@ -18,7 +19,8 @@ const postReducer = (state = initialState, action) => {
           postData: action.postData,
           skipCount: action.skipCount + state.limitCount,
           postCount: action.postCount,
-          hasMore: action.hasMore
+          hasMore: action.hasMore,
+          categoryId: action.categoryId
         };
       } else {
         return {
@@ -27,6 +29,7 @@ const postReducer = (state = initialState, action) => {
           postData: [...state.postData, ...action.postData],
           skipCount: action.skipCount + state.limitCount,
           postCount: action.postCount,
+          categoryId: action.categoryId,
           hasMore: action.hasMore
         };
       }

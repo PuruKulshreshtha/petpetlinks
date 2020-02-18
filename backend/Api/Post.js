@@ -55,14 +55,17 @@ module.exports = {
 
   allPosts: data => {
     return new Promise((res, rej) => {
+      console.log("data", data);
+
       let categoryId = {};
-      if (data.category === null) {
+      if (data.categoryId === null) {
         categoryId = {};
         // console.log("notalllll ", categoryId);
       } else {
-        categoryId = data.category;
+        categoryId = { categoryId: data.categoryId };
         //  console.log("Yess All", categoryId);
       }
+      console.log(">>>>", categoryId);
       //console.log(
       //   "hello----------------------------------------------------------------",
       //   data

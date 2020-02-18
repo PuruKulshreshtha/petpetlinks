@@ -227,7 +227,14 @@ class RightContiner extends React.Component {
                   ? this.props.categoriesData.map((data, index) => {
                       return (
                         <li key={index}>
-                          <a onClick={() => this.changeCategory(data._id)}>
+                          <a
+                            onClick={() =>
+                              this.props.loadMore({
+                                postBy: { categoryId: data._id },
+                                skipCount: 0
+                              })
+                            }
+                          >
                             <span className="list_icon">
                               <img src="/images/icon_03.png" alt="up" />
                             </span>{" "}
@@ -239,7 +246,14 @@ class RightContiner extends React.Component {
                   : null}
 
                 <li>
-                  <a>
+                  <a
+                    onClick={() => {
+                      this.props.loadMore({
+                        postBy: {},
+                        skipCount: 0
+                      });
+                    }}
+                  >
                     <span className="list_icon">
                       <img src="/images/icon_05.png" alt="up" />
                     </span>{" "}
