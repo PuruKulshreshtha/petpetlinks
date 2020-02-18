@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 
 class Header extends React.Component {
   constructor(props) {
@@ -11,11 +11,12 @@ class Header extends React.Component {
     localStorage.removeItem("ID");
     localStorage.removeItem("email");
     localStorage.removeItem("username");
+    this.props.history.push("/login");
   };
-  componentDidMount() {
-    // console.log("???????????????????????????????????");
-  }
+
   render() {
+    // console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>", this.props.location.pathname);
+    let pathname = this.props.location.pathname;
     return (
       <div>
         <div className="navbar navbar-inverse navbar-fixed-top">
@@ -117,7 +118,9 @@ class Header extends React.Component {
               </ul>
             </div>
           </div>
-          {this.props.id ? (
+          {!["/signup", "/login", "/forget", "/verify/:id"].includes(
+            pathname
+          ) ? (
             <div className="header_rgt">
               <div className="flag_div">
                 <img src="images/flag.png" alt="" />
@@ -138,10 +141,10 @@ class Header extends React.Component {
 
                 <div className="pro_info pull-right">
                   <div className="pro_icn">
-                    <Link to="/index">
+                    <a>
                       {" "}
                       <img src="/images/pic_small.png" alt="" />
-                    </Link>
+                    </a>
                   </div>
 
                   <div className="pro_txt">
@@ -188,4 +191,4 @@ class Header extends React.Component {
     );
   }
 }
-export default Header;
+export default withRouter(Header);

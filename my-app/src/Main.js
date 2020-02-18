@@ -9,7 +9,7 @@ class Main extends React.Component {
     return (
       <div>
         <Provider store={store}>
-          <Header id={localStorage.getItem("ID")} />
+          <Header />
           <Router />
           <Footer />
         </Provider>
