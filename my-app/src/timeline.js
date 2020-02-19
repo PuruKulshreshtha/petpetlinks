@@ -1,11 +1,8 @@
 import React from "react";
-//import { DefaultCategory } from "./Redux/Constant";
 import { connect } from "react-redux";
-import { post, UpdateHasMore } from "./Redux/Action/postAction";
+import { post } from "./Redux/Action/postAction";
 import store from "./Redux/store";
 import { get } from "lodash";
-// import LIKEBUTTON from "./Component/like";
-// import { Link } from "react-router-dom";
 import Post from "./Component/post";
 import config from "./config";
 import callApi from "./api";
@@ -18,24 +15,7 @@ const { ROUTES, SERVER_URL } = config;
 class Timeline extends React.Component {
   constructor(props) {
     super(props);
-    //console.log(">>>>", DefaultCategory);
-    this.state = {
-      toggleShare: false,
-      email: "",
-      selectedFiles: "",
-
-      status: false,
-      emailShare: "",
-      shareStatus: null,
-      opendedId: "",
-      hasMoreItems: true,
-      limitCount: 3,
-      skipCount: 0,
-      content: [],
-      ans: "",
-      contentCopy: [],
-      postCounts: 0
-    };
+    this.state = {};
   }
 
   loadMorePosts = ({
@@ -44,15 +24,11 @@ class Timeline extends React.Component {
     limitCount = this.props.limitCount,
     categoryId = this.props.categoryId
   }) => {
-    // console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>Load more ", postBy);
     let postCounts = 0;
-
     callApi({ url: ROUTES.POST_COUNT, method: "POST", data: postBy }).then(
       resp => {
         postCounts = resp.data.count;
-        // console.log(">>>>>>>>>", postCounts);
-        //console.log(">>>>>>>>>>>>>>>>>?????", skipCount, limitCount);
-        //store.dispatch(post([], postCounts, skipCount, false));
+
         if (skipCount > postCounts) {
           store.dispatch(post([], postCounts, skipCount, false, postBy));
           return;
@@ -62,10 +38,6 @@ class Timeline extends React.Component {
             limitCount: limitCount,
             categoryId: get(postBy, "categoryId", null)
           };
-          // console.log("?????????????????????????????????????", data);
-          // this.setState({ skipCount: skipCount + limitCount }, () => {
-          //   console.log(">>", this.state.skipCount);
-          // });
           callApi({ url: ROUTES.ALL_POSTS, method: "POST", data: data }).then(
             response => {
               const content = response.data.dataFromDatabase;
@@ -73,15 +45,6 @@ class Timeline extends React.Component {
               store.dispatch(
                 post(content, postCounts, skipCount, true, postBy)
               );
-              // this.setState({
-              //   content: [...this.state.content, ...content],
-
-              //   postCounts,
-              //   hasMoreItems: true,
-              //   //contentCopy: [...this.state.contentCopy, ...content],
-              //   skipCount: skipCount + limitCount
-              // });
-              // console.log(">>>>>>>>>.Content alll", this.state.content);
             }
           );
         }
@@ -130,33 +93,18 @@ class Timeline extends React.Component {
         <div className="container">
           <div className="content">
             <RightContiner
-              // contentCopy={this.state.contentCopy}
-              // onChangeCategory={newData => {
-              //   this.setState({ content: newData });
-              // }}
               loadMore={this.loadMorePosts}
               history={this.props.history}
             />
 
             <div className="content_lft">
               {this.props.match.path === "/timeline" ? (
-                <Main_timeline
-                  contentCopy={this.state.contentCopy}
-                  history={this.props.history}
-                />
+                <Main_timeline history={this.props.history} />
               ) : null}
               {this.props.match.path === "/index" ? (
-                <Main_index
-                  contentCopy={this.state.contentCopy}
-                  history={this.props.history}
-                />
+                <Main_index history={this.props.history} />
               ) : null}
               <div className="contnt_2">
-                <div>
-                  <h3>{this.state.status}</h3>
-                  <h3>{this.state.emailFromDatabase}</h3>
-                </div>
-
                 <InfiniteScroll
                   pageStart={0}
                   loadMore={this.loadMorePosts}
@@ -187,7 +135,6 @@ class Timeline extends React.Component {
   }
 }
 const mapStateToProps = (state, ownProps) => {
-  //console.log("?>>>>>>>>>>>>>>>?????????????????????????", state, ownProps);
   return {
     content: state.post.postData,
     limitCount: state.post.limitCount,

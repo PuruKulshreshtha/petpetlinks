@@ -1,7 +1,9 @@
 import React from "react";
 import callApi from "../api";
 import config from "../config";
-
+import { withRouter } from "react-router-dom";
+import { like } from "../Redux/Action/postAction";
+import store from "../Redux/store";
 const { ROUTES, SERVER_URL } = config;
 
 class LikeButton extends React.Component {
@@ -21,9 +23,14 @@ class LikeButton extends React.Component {
       url: ROUTES.LIKE,
       data: data
     }).then(response => {
-      console.log("REs>", response);
-
-      this.props.allPosts();
+      //console.log("REs>", response);
+      let pathname = this.props.location.pathname;
+      let result = ["/timeline", "/index"].includes(pathname);
+      if (result) {
+        store.dispatch(like(response.data));
+      } else {
+        this.props.allPosts();
+      }
     });
   };
 
@@ -47,4 +54,4 @@ class LikeButton extends React.Component {
   }
 }
 
-export default LikeButton;
+export default withRouter(LikeButton);

@@ -1,4 +1,4 @@
-import { AllPost } from "../Constant";
+import { AllPost, Like, SinglePost } from "../Constant";
 
 export const post = (postData, postCount, skipCount, hasMore, categoryId) => {
   //console.log(">>>>>>>>>>>>>>", hasMore);
@@ -9,5 +9,20 @@ export const post = (postData, postCount, skipCount, hasMore, categoryId) => {
     skipCount: skipCount,
     hasMore: hasMore,
     categoryId: categoryId
+  };
+};
+
+export const like = singePostData => {
+  return {
+    type: Like,
+    singePostData: singePostData[0]
+  };
+};
+
+export const singlePost = singePostData => {
+  // console.log("?>>>>>>>>>>>>>>>>>>>>>>>??????????????", singePostData);
+  return {
+    type: SinglePost,
+    singePostData: singePostData.dataFromDatabase
   };
 };

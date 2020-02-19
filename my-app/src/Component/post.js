@@ -171,7 +171,7 @@ class post extends Component {
                 <LIKEBUTTON
                   id={data._id}
                   allPosts={this.props.allpost}
-                  noOflikes={data.like.length}
+                  noOflikes={get(data, "like", []).length}
                 />
                 <li>
                   <Link to={"/singlePost/" + data._id}>

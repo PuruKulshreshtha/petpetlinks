@@ -2,30 +2,22 @@ import React from "react";
 import config from "./config";
 import Post from "./Component/post";
 import callApi from "./api";
+import { connect } from "react-redux";
 import RightContiner from "./rightContainer";
+import { singlePost } from "./Redux/Action/postAction";
+import store from "./Redux/store";
+import isEmpty from "lodash/isEmpty";
 const { ROUTES } = config;
 
 class SinglePost extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      comments: "",
-      postId: "",
-      username: "",
-      requiredDateString: "",
-      content: []
-    };
+
+    this.commentRef = React.createRef();
+    this.state = {};
 
     //console.log("this.props", this.props.match.params);
   }
-
-  changeState = e => {
-    const value = e.target.value;
-    const name = e.target.name;
-    this.setState({
-      [name]: value
-    });
-  };
 
   defaultComments = () => {
     callApi({
@@ -45,35 +37,33 @@ class SinglePost extends React.Component {
     const id = this.props.match.params;
     callApi({ method: "POST", data: id, url: ROUTES.SINGLE_POST }).then(
       response => {
-        // console.log("Response single post",response)
-        const content = response.data.dataFromDatabase;
-        // console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>", content);
-        const c = response.data.dataFromDatabase[0]._id;
-        //console.log("Co>>>>>>>>", content.time);
-        //let date = new Date(content.time);
-        this.setState({ postId: c, content: content });
+        store.dispatch(singlePost(response.data));
       }
     );
   };
 
   comment = e => {
     e.preventDefault();
-    const data = {
-      comment: this.state.comments,
-      userId: localStorage.getItem("ID"),
-      postId: this.state.postId
-    };
-    console.log("dATQ", data);
-    callApi({ method: "POST", url: ROUTES.COMMENT_SAVE, data: data }).then(
-      response => {
-        if (response) {
-          this.posts();
-          this.defaultComments();
+    // console.log(">>>>>>>>>>>", e.target.comments.value);
+    if (e.target.comments.value !== "") {
+      const data = {
+        comment: e.target.comments.value,
+        userId: localStorage.getItem("ID"),
+        postId: this.props.content[0]._id
+      };
+      // console.log("dATQ", data);
+      callApi({ method: "POST", url: ROUTES.COMMENT_SAVE, data: data }).then(
+        response => {
+          if (response) {
+            this.posts();
+            this.defaultComments();
+          }
+          this.commentRef.current.value = "";
         }
-
-        this.setState({ comments: "" });
-      }
-    );
+      );
+    } else {
+      alert("Please first enter the comment ");
+    }
   };
 
   componentDidMount() {
@@ -89,28 +79,18 @@ class SinglePost extends React.Component {
   }
 
   render() {
-    let { content } = this.state;
+    let content = this.props.content[0];
 
     return (
       <div>
         <div>
           <div className="container">
             <div className="content">
-              <RightContiner
-                history={this.props.history}
-                state={this.state.contentCopy}
-                onChangeCategory={newData => {
-                  this.setState({ content: newData });
-                }}
-              />
+              <RightContiner history={this.props.history} />
               <div className="content_lft">
-                {content
-                  ? content.map(data => {
-                      return (
-                        <Post data={data} key={data._id} allpost={this.posts} />
-                      );
-                    })
-                  : null}
+                {!isEmpty(content) ? (
+                  <Post data={content} key={content._id} allpost={this.posts} />
+                ) : null}
 
                 <div className="contnt_3">
                   <ul>
@@ -139,10 +119,9 @@ class SinglePost extends React.Component {
                       <form onSubmit={this.comment}>
                         <div className="cmnt_div1">
                           <input
+                            ref={this.commentRef}
                             type="text"
                             name="comments"
-                            value={this.state.comments}
-                            onChange={this.changeState}
                             placeholder="Enter your Comment"
                             className="cmnt_bx1"
                             required
@@ -170,5 +149,10 @@ class SinglePost extends React.Component {
     );
   }
 }
-
-export default SinglePost;
+const mapStateToProps = (state, ownProps) => {
+  //console.log("?>>>>>>>>>>>>>>>?????????????????????????", state.post.postData);
+  return {
+    content: state.post.singePostData
+  };
+};
+export default connect(mapStateToProps)(SinglePost);

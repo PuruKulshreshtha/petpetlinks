@@ -1,8 +1,9 @@
-import { AllPost, UpdateHaseMore } from "../Constant";
+import { AllPost, Like, SinglePost } from "../Constant";
 import store from "../store";
 
 const initialState = {
   postData: [],
+  singePostData: [],
   skipCount: 0,
   limitCount: 2,
   hasMore: true,
@@ -33,6 +34,26 @@ const postReducer = (state = initialState, action) => {
           hasMore: action.hasMore
         };
       }
+    case Like: {
+      const updatedContent = state.postData.map(data => {
+        if (data._id === action.singePostData._id) {
+          data.like = action.singePostData.like;
+          return data;
+        } else {
+          return data;
+        }
+      });
+      return {
+        ...state,
+        postData: updatedContent
+      };
+    }
+    case SinglePost: {
+      return {
+        ...state,
+        singePostData: action.singePostData
+      };
+    }
     default:
       return state;
   }
