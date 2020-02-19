@@ -5,8 +5,11 @@ import callApi from "./api";
 import { connect } from "react-redux";
 import RightContiner from "./rightContainer";
 import { singlePost } from "./Redux/Action/postAction";
+import { comment, addComment } from "./Redux/Action/commentAction";
+
 import store from "./Redux/store";
 import isEmpty from "lodash/isEmpty";
+
 const { ROUTES } = config;
 
 class SinglePost extends React.Component {
@@ -25,11 +28,8 @@ class SinglePost extends React.Component {
       data: this.props.match.params,
       url: ROUTES.DEFAULT_COMMENTS
     }).then(response => {
-      //console.log("default comments--",response);
-      let commentArr = response.data.dataFromDatabase;
-      let c_status = response.data.status;
-      // console.log("comentARR",commentArr);
-      this.setState({ commentArr, c_status });
+      store.dispatch(comment(response.data.dataFromDatabase));
+      // console.log(">>>>>>>>>>.... default comments", this.props.commentArr);
     });
   };
 
@@ -55,8 +55,9 @@ class SinglePost extends React.Component {
       callApi({ method: "POST", url: ROUTES.COMMENT_SAVE, data: data }).then(
         response => {
           if (response) {
+            store.dispatch(addComment(response.data));
+
             this.posts();
-            this.defaultComments();
           }
           this.commentRef.current.value = "";
         }
@@ -71,6 +72,7 @@ class SinglePost extends React.Component {
       localStorage.getItem("ID") != null &&
       this.props.match.params.id != null
     ) {
+      window.scrollTo(0, 0);
       this.posts();
       this.defaultComments();
     } else {
@@ -80,7 +82,7 @@ class SinglePost extends React.Component {
 
   render() {
     let content = this.props.content[0];
-
+    let commentArr = this.props.commentArr;
     return (
       <div>
         <div>
@@ -94,8 +96,8 @@ class SinglePost extends React.Component {
 
                 <div className="contnt_3">
                   <ul>
-                    {this.state.c_status === "ok"
-                      ? this.state.commentArr.map((data, index) => {
+                    {commentArr
+                      ? commentArr.map((data, index) => {
                           return (
                             <div key={index}>
                               <li>
@@ -152,7 +154,8 @@ class SinglePost extends React.Component {
 const mapStateToProps = (state, ownProps) => {
   //console.log("?>>>>>>>>>>>>>>>?????????????????????????", state.post.postData);
   return {
-    content: state.post.singePostData
+    content: state.post.singePostData,
+    commentArr: state.comment.commentArr
   };
 };
 export default connect(mapStateToProps)(SinglePost);

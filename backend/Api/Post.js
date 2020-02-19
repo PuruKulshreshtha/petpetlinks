@@ -231,7 +231,13 @@ module.exports = {
               }
             }
           );
-          res(result);
+          commentSchema
+            .find({ _id: result._id })
+            .populate("userId")
+            .then(resp => {
+              res(resp);
+            });
+          // res(result);
         } else {
           rej(err);
         }

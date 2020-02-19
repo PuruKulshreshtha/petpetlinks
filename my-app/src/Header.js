@@ -35,7 +35,10 @@ class Header extends React.Component {
               <a className="brand">PPL</a>
               <div className="pro_info pull-right">
                 <div className="pro_icn">
-                  <img src="/images/pic_small.png" alt="" />
+                  <Link to="/index">
+                    {" "}
+                    <img src="/images/pic_small.png" alt="" />
+                  </Link>
                 </div>
 
                 <div className="pro_txt">
@@ -141,10 +144,11 @@ class Header extends React.Component {
 
                 <div className="pro_info pull-right">
                   <div className="pro_icn">
-                    <a>
+                    {" "}
+                    <Link to="/index">
                       {" "}
                       <img src="/images/pic_small.png" alt="" />
-                    </a>
+                    </Link>
                   </div>
 
                   <div className="pro_txt">
