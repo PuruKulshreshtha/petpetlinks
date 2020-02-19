@@ -10,7 +10,7 @@ let storage = multer.diskStorage({
     cb(null, "./ProfilePics");
   },
   filename: function(req, file, cb) {
-    cb(null, date + file.originalname);
+    cb(null, date + "-" + file.originalname);
   }
 });
 
@@ -21,7 +21,7 @@ router.post("/profile", upload.single("profilePic"), (req, res) => {
   // console.log("File body", req.files);
   // console.log("request parameters in all posts", req.body);
   const data = {
-    profilePic: date + req.file.originalname,
+    profilePic: date + "-" + req.file.originalname,
     userId: req.body.userId
   };
   // console.log(">>>>>>>>>>>>>>...hey Profiule pic", data);
