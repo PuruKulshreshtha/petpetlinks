@@ -1,5 +1,4 @@
 import { AllPost, Like, SinglePost } from "../Constant";
-import store from "../store";
 
 const initialState = {
   postData: [],

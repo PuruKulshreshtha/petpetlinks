@@ -67,20 +67,20 @@ class Main_Index extends React.Component {
           <div className="post_list">
             <ul>
               <li>
-                <a>
+                <div>
                   <span className="list_img">
-                    <img src="images/img_1.png" />
+                    <img src="images/img_1.png" alt="hey" />
                   </span>
                   Latest First
-                </a>
+                </div>
               </li>
               <li>
-                <a>
+                <div>
                   <span className="list_img">
-                    <img src="images/img_2.png" />
+                    <img src="images/img_2.png" alt="hey" />
                   </span>
                   Oldest First
-                </a>
+                </div>
               </li>
               {/*<li>
                   <a href="#">
@@ -91,20 +91,20 @@ class Main_Index extends React.Component {
                   </a>
                 </li>*/}
               <li>
-                <a>
+                <div>
                   <span className="list_img">
-                    <img src="images/img_4.png" />
+                    <img src="images/img_4.png" alt="hey" />
                   </span>
                   Most Clicks
-                </a>
+                </div>
               </li>
               <li>
-                <a>
+                <div>
                   <span className="list_img">
-                    <img src="images/img_5.png" />
+                    <img src="images/img_5.png" alt="hey" />
                   </span>
                   Most Commented
-                </a>
+                </div>
               </li>
             </ul>
           </div>

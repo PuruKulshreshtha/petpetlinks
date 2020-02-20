@@ -4,7 +4,7 @@ import config from "../config";
 import { withRouter } from "react-router-dom";
 import { like } from "../Redux/Action/postAction";
 import store from "../Redux/store";
-const { ROUTES, SERVER_URL } = config;
+const { ROUTES } = config;
 
 class LikeButton extends React.Component {
   constructor(props) {
@@ -38,7 +38,7 @@ class LikeButton extends React.Component {
     return (
       <div>
         <li>
-          <a
+          <div
             onClick={() => {
               this.getlike();
             }}
@@ -47,7 +47,7 @@ class LikeButton extends React.Component {
               <img src="/images/icon_003.png" alt="share" />
             </span>
             {this.props.noOflikes ? this.props.noOflikes : 0} Likes
-          </a>
+          </div>
         </li>
       </div>
     );

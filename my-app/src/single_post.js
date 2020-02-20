@@ -103,7 +103,10 @@ class SinglePost extends React.Component {
                               <li>
                                 <div className="list_image">
                                   <div className="image_sec">
-                                    <img src="/images/post_img.png" />
+                                    <img
+                                      src="/images/post_img.png"
+                                      alt="hello"
+                                    />
                                   </div>
                                   <div className="image_name">
                                     {data.userId.username}
@@ -138,7 +141,7 @@ class SinglePost extends React.Component {
                     </li>
                   </ul>
                   <div className="view_div">
-                    <a>View more</a>
+                    <div>View more</div>
                   </div>
                 </div>
               </div>

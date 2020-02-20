@@ -1,7 +1,6 @@
 import React from "react";
-import axios from "axios";
 import callApi from "../api";
-import { filter, get } from "lodash";
+import { get } from "lodash";
 import config from "../config";
 
 const { ROUTES, SERVER_URL } = config;

@@ -6,12 +6,12 @@ import { get } from "lodash";
 import Post from "./Component/post";
 import config from "./config";
 import callApi from "./api";
-import Main_index from "./Main_Index";
-import Main_timeline from "./Main_timeline";
+import Mainindex from "./Main_Index";
+import Maintimeline from "./Main_timeline";
 import RightContiner from "./rightContainer";
 import InfiniteScroll from "react-infinite-scroller";
 
-const { ROUTES, SERVER_URL } = config;
+const { ROUTES } = config;
 class Timeline extends React.Component {
   constructor(props) {
     super(props);
@@ -99,10 +99,10 @@ class Timeline extends React.Component {
 
             <div className="content_lft">
               {this.props.match.path === "/timeline" ? (
-                <Main_timeline history={this.props.history} />
+                <Maintimeline history={this.props.history} />
               ) : null}
               {this.props.match.path === "/index" ? (
-                <Main_index history={this.props.history} />
+                <Mainindex history={this.props.history} />
               ) : null}
               <div className="contnt_2">
                 <InfiniteScroll

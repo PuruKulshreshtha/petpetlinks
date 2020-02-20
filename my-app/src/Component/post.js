@@ -115,7 +115,7 @@ class post extends Component {
             <div className="btm_list">
               <ul>
                 <li>
-                  <a
+                  <div
                     onClick={() => {
                       this.toggleShare(data._id);
                     }}
@@ -124,7 +124,7 @@ class post extends Component {
                       <img src="/images/icon_001.png" alt="share" />
                     </span>
                     Share
-                  </a>
+                  </div>
                 </li>
 
                 {/* <Share
@@ -135,7 +135,7 @@ class post extends Component {
               }}
             /> */}
                 <li>
-                  <a
+                  <div
                     onClick={() => {
                       this.downloadFile(data.selectedFiles);
                     }}
@@ -151,7 +151,7 @@ class post extends Component {
                       />
                     </span>
                     Download
-                  </a>
+                  </div>
                 </li>
                 {/* <li>
               <a

@@ -2962,6 +2962,38 @@ table th[class*="span"],
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff0088cc', endColorstr='#ff0077b3', GradientType=0);
 }
 
+.dropdown-menu > li > div {
+  display: block;
+  padding: 3px 20px;
+  clear: both;
+  font-weight: normal;
+  line-height: 20px;
+  color: #333333;
+  white-space: nowrap;
+}
+
+.dropdown-menu > li > div:hover,
+.dropdown-menu > li > div:focus,
+.dropdown-submenu:hover > div,
+.dropdown-submenu:focus > div {
+  color: #ffffff;
+  text-decoration: none;
+  background-color: #0081c2;
+  background-image: -moz-linear-gradient(top, #0088cc, #0077b3);
+  background-image: -webkit-gradient(
+    linear,
+    0 0,
+    0 100%,
+    from(#0088cc),
+    to(#0077b3)
+  );
+  background-image: -webkit-linear-gradient(top, #0088cc, #0077b3);
+  background-image: -o-linear-gradient(top, #0088cc, #0077b3);
+  background-image: linear-gradient(to bottom, #0088cc, #0077b3);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff0088cc', endColorstr='#ff0077b3', GradientType=0);
+}
+
 .dropdown-menu > .active > a,
 .dropdown-menu > .active > a:hover,
 .dropdown-menu > .active > a:focus {
@@ -6509,6 +6541,10 @@ a.badge:focus {
   color: #fff;
   padding-bottom: 25px;
 }
+.navigatn ul li div {
+  color: #fff;
+  padding-bottom: 25px;
+}
 .navigatn ul li:last-child {
   margin-right: 0%;
 }
@@ -6712,6 +6748,14 @@ a.badge:focus {
   float: left;
   font-size: 13px;
 }
+
+.post_list ul li div {
+  color: #505050;
+  width: 100%;
+  float: left;
+  font-size: 13px;
+}
+
 .post_list ul li:hover {
   background-image: url(../images/arw2.png);
   background-position: bottom center;
@@ -6894,6 +6938,14 @@ a.badge:focus {
   height: 24px;
   line-height: 24px;
 }
+.btm_list ul li div {
+  color: #fff;
+  float: left;
+  width: 100%;
+  font-size: 13px;
+  height: 24px;
+  line-height: 24px;
+}
 .btn_icon {
   width: auto;
   float: left;
@@ -6962,7 +7014,10 @@ a.badge:focus {
   color: #fff;
   line-height: 58px;
 }
-
+.rght_btn div {
+  color: #fff;
+  line-height: 58px;
+}
 .rght_btn_icon {
   width: auto;
   height: auto;
@@ -7034,6 +7089,21 @@ a.badge:focus {
   width: 100%;
   float: left;
 }
+
+.rght_list ul li div {
+  color: #303130;
+  text-shadow: 0px 1px 0px #bdbebd;
+  width: 100%;
+  float: left;
+}
+.rght_list ul li div:hover {
+  color: white;
+  background-color: #ff8e14;
+  text-shadow: 0px 1px 0px #bdbebd;
+  width: 100%;
+  float: left;
+}
+
 .list_icon {
   /* float:left; */
   width: auto;
@@ -7677,6 +7747,9 @@ a.badge:focus {
 .edit_div a {
   color: #848181;
 }
+.edit_div div {
+  color: #848181;
+}
 .edit_div img {
   padding-left: 7px;
 }
@@ -7787,6 +7860,54 @@ a.badge:focus {
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f3891f', endColorstr='#ec6a14', GradientType=0 );
   border: 1px solid #ee830d;
 }
+
+/*vsdhfvshdhsd*/
+.timeline_div2 ul li div {
+  color: #000;
+  float: left;
+  width: 100%;
+}
+.timeline_div2 ul li div:hover {
+  color: #fff;
+  box-shadow: 0 1px 0 #ffcc30 inset;
+  background: #f3891f;
+  background: -moz-linear-gradient(top, #f3891f 0%, #ec6a14 100%);
+  background: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    color-stop(0%, #f3891f),
+    color-stop(100%, #ec6a14)
+  );
+  background: -webkit-linear-gradient(top, #f3891f 0%, #ec6a14 100%);
+  background: -o-linear-gradient(top, #f3891f 0%, #ec6a14 100%);
+  background: -ms-linear-gradient(top, #f3891f 0%, #ec6a14 100%);
+  background: linear-gradient(to bottom, #f3891f 0%, #ec6a14 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f3891f', endColorstr='#ec6a14', GradientType=0 );
+  border: 1px solid #ee830d;
+}
+.timeline_div2 ul li div.active {
+  color: #fff;
+  box-shadow: 0 1px 0 #ffcc30 inset;
+  background: #f3891f;
+  background: -moz-linear-gradient(top, #f3891f 0%, #ec6a14 100%);
+  background: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    color-stop(0%, #f3891f),
+    color-stop(100%, #ec6a14)
+  );
+  background: -webkit-linear-gradient(top, #f3891f 0%, #ec6a14 100%);
+  background: -o-linear-gradient(top, #f3891f 0%, #ec6a14 100%);
+  background: -ms-linear-gradient(top, #f3891f 0%, #ec6a14 100%);
+  background: linear-gradient(to bottom, #f3891f 0%, #ec6a14 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f3891f', endColorstr='#ec6a14', GradientType=0 );
+  border: 1px solid #ee830d;
+}
+
+
+
 .timeline_div2 ul li:last-child {
   border-right: none;
 }

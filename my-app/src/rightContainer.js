@@ -125,14 +125,14 @@ class RightContiner extends React.Component {
             //onChange={this.changeState}
             required
           />
-          <a onClick={this.handleCategory}>
+          <div onClick={this.handleCategory}>
             <img
               height="15px"
               width="20px"
               alt="close icon"
               src="/images/close.ico"
             ></img>
-          </a>
+          </div>
           <input type="submit" />
         </form>
       </div>
@@ -202,7 +202,7 @@ class RightContiner extends React.Component {
             <span className="btn_sep">
               <img src="/images/btn_sep.png" alt="sep" />
             </span>{" "}
-            <a onClick={this.handleClick}>Upload Post</a>{" "}
+            <div onClick={this.handleClick}>Upload Post</div>{" "}
           </div>
 
           <div className="rght_btn">
@@ -213,7 +213,7 @@ class RightContiner extends React.Component {
             <span className="btn_sep">
               <img src="/images/btn_sep.png" alt="sep" />
             </span>{" "}
-            <a onClick={this.handleCategory}>UploadCategories</a>{" "}
+            <div onClick={this.handleCategory}>UploadCategories</div>{" "}
           </div>
           <div className="rght_cate">
             <div>{this.state.ans1 ? this.categoryForm() : null}</div>
@@ -227,7 +227,7 @@ class RightContiner extends React.Component {
                   ? this.props.categoriesData.map((data, index) => {
                       return (
                         <li key={index}>
-                          <a
+                          <div
                             onClick={() =>
                               this.props.loadMore({
                                 postBy: { categoryId: data._id },
@@ -239,14 +239,14 @@ class RightContiner extends React.Component {
                               <img src="/images/icon_03.png" alt="up" />
                             </span>{" "}
                             {data.category}
-                          </a>
+                          </div>
                         </li>
                       );
                     })
                   : null}
 
                 <li>
-                  <a
+                  <div
                     onClick={() => {
                       this.props.loadMore({
                         postBy: {},
@@ -258,7 +258,7 @@ class RightContiner extends React.Component {
                       <img src="/images/icon_05.png" alt="up" />
                     </span>{" "}
                     All post
-                  </a>
+                  </div>
                 </li>
               </ul>
             </div>

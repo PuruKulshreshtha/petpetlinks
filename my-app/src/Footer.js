@@ -10,8 +10,8 @@ class Footer extends React.Component {
             <div className="footer_div1">
               Copyright © Pet-Socail 2014 All Rights Reserved
             </div>
-            <div className="footer_div2">
-              <a>Privacy Policy </a>| <a> Terms &amp; Conditions</a>
+            <div className="footer_div2" style={{ color: "white" }}>
+              Privacy Policy | Terms &amp; Conditions
             </div>
           </div>
           <div className="footr_rgt">

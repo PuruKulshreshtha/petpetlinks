@@ -8,9 +8,14 @@ class Popup extends React.PureComponent {
         <div className="popup\_inner">
           <h4 style={{ textAlign: "center" }}>Upload Post</h4>
           <div className="topright">
-            <a onClick={this.props.closePopup}>
-              <img height="20px" width="30px" src="/images/close.ico"></img>
-            </a>
+            <div onClick={this.props.closePopup}>
+              <img
+                height="20px"
+                width="30px"
+                alt="close"
+                src="/images/close.ico"
+              ></img>
+            </div>
           </div>
           <form
             onSubmit={this.props.fileUpload}

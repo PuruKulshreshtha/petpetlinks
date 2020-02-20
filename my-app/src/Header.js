@@ -32,7 +32,7 @@ class Header extends React.Component {
                 <span className="icon-bar" /> <span className="icon-bar" />{" "}
                 <span className="icon-bar" />{" "}
               </button>
-              <a className="brand">PPL</a>
+              <div className="brand">PPL</div>
               <div className="pro_info pull-right">
                 <div className="pro_icn">
                   <Link to="/index">
@@ -51,19 +51,19 @@ class Header extends React.Component {
                   aria-labelledby="dLabel"
                 >
                   <li>
-                    <a tabIndex={-1}>My Profile</a>
+                    <div tabIndex={-1}>My Profile</div>
                   </li>
                   <li>
-                    <a tabIndex={-1}>Message Box</a>
+                    <div tabIndex={-1}>Message Box</div>
                   </li>
                   <li onClick={() => this.logout()}>
                     <Link to="/login"> Logout</Link>
                   </li>
                   <li className="divider" />
                   <li>
-                    <a tabIndex={-1}>
+                    <div tabIndex={-1}>
                       <input type="text" placeholder="search" />
-                    </a>
+                    </div>
                   </li>
                 </ul>
               </div>
@@ -71,23 +71,23 @@ class Header extends React.Component {
                 <ul className="nav">
                   <li className="active">
                     {" "}
-                    <a>Home</a>{" "}
+                    <div>Home</div>{" "}
                   </li>
                   <li>
                     {" "}
-                    <a>E-Coupons</a>{" "}
+                    <div>E-Coupons</div>{" "}
                   </li>
                   <li>
                     {" "}
-                    <a>E-Brands</a>{" "}
+                    <div>E-Brands</div>{" "}
                   </li>
                   <li>
                     {" "}
-                    <a>Resuse Market</a>{" "}
+                    <div>Resuse Market</div>{" "}
                   </li>
                   <li>
                     {" "}
-                    <a>Lost and Found</a>{" "}
+                    <div>Lost and Found</div>{" "}
                   </li>
                 </ul>
               </div>
@@ -107,16 +107,16 @@ class Header extends React.Component {
                   <Link to="/timeline">Home</Link>
                 </li>
                 <li>
-                  <a> E-Coupons </a>
+                  <div> E-Coupons </div>
                 </li>
                 <li>
-                  <a>E-Brands </a>
+                  <div>E-Brands </div>
                 </li>
                 <li>
-                  <a> Resuse Market </a>
+                  <div> Resuse Market </div>
                 </li>
                 <li>
-                  <a> Lost and Found</a>
+                  <div> Lost and Found</div>
                 </li>
               </ul>
             </div>
@@ -130,9 +130,11 @@ class Header extends React.Component {
               </div>
               <input type="text" placeholder="Search" className="txt_box" />
               <div className="msg_box">
-                <a>
-                  <span className="msg_count">100</span>
-                </a>
+                <div>
+                  <span className="msg_count" style={{ color: "white" }}>
+                    100
+                  </span>
+                </div>
               </div>
               <div className="info_div">
                 {/* <div className="image_div">
@@ -162,14 +164,14 @@ class Header extends React.Component {
                     aria-labelledby="dLabel"
                   >
                     <li>
-                      <a style={{ borderRadius: 10 }} tabIndex={-1}>
+                      <div style={{ borderRadius: 10 }} tabIndex={-1}>
                         My Profile
-                      </a>
+                      </div>
                     </li>
                     <li>
-                      <a style={{ borderRadius: 10 }} tabIndex={-1}>
+                      <div style={{ borderRadius: 10 }} tabIndex={-1}>
                         Message Box
-                      </a>
+                      </div>
                     </li>
                     <li onClick={() => this.logout()}>
                       <Link style={{ borderRadius: 10 }} to="/login">
@@ -179,9 +181,9 @@ class Header extends React.Component {
                     </li>
                     <li className="divider" />
                     <li>
-                      <a tabIndex={-1}>
+                      <div tabIndex={-1}>
                         <input type="text" placeholder="search" />
-                      </a>
+                      </div>
                     </li>
                   </ul>
                 </div>

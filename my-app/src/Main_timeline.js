@@ -1,4 +1,4 @@
-import React, { useImperativeHandle } from "react";
+import React from "react";
 import config from "./config";
 import callApi from "./api";
 import Dropzone from "react-dropzone";
@@ -41,10 +41,6 @@ class Main_timeline extends React.Component {
     ) {
       fd.append("profilePic", pic[0]);
       fd.append("userId", localStorage.getItem("ID"));
-      let ld = {
-        profilePic: pic[0],
-        userId: localStorage.getItem("ID")
-      };
 
       callApi({
         url: ROUTES.PROFILE_PIC,
@@ -115,7 +111,7 @@ class Main_timeline extends React.Component {
           <div className="timeline_div">
             <div className="timeline_div1">
               <div className="profile_pic">
-                <a>
+                <div>
                   <Dropzone
                     onDrop={acceptedFiles => this.profileChange(acceptedFiles)}
                   >
@@ -132,7 +128,7 @@ class Main_timeline extends React.Component {
                     )}
                   </Dropzone>
                   {/* <img src="images/123.jpg" alt="" /> */}
-                </a>
+                </div>
                 <div className="profile_text">
                   {/* <Dropzone
                     onDrop={acceptedFiles => console.log(acceptedFiles)}
@@ -153,9 +149,9 @@ class Main_timeline extends React.Component {
               </div>
               <div className="profile_info">
                 <div className="edit_div">
-                  <a>
+                  <div>
                     Edit <img src="images/timeline_img.png" alt="" />
-                  </a>
+                  </div>
                 </div>
                 <div className="profile_form">
                   <ul>
@@ -183,7 +179,7 @@ class Main_timeline extends React.Component {
             <div className="timeline_div2">
               <ul>
                 <li>
-                  <a
+                  <div
                     id="t"
                     className="active"
                     onClick={() => {
@@ -192,19 +188,19 @@ class Main_timeline extends React.Component {
                     }}
                   >
                     Timeline{" "}
-                  </a>
+                  </div>
                 </li>
                 <li>
-                  <a>About </a>
+                  <div>About </div>
                 </li>
                 <li>
-                  <a>Album</a>
+                  <div>Album</div>
                 </li>
                 <li>
-                  <a> Pets</a>
+                  <div> Pets</div>
                 </li>
                 <li>
-                  <a
+                  <div
                     onClick={() => {
                       document.getElementById("m").className = "active";
                       document.getElementById("t").className = "";
@@ -213,7 +209,7 @@ class Main_timeline extends React.Component {
                     id="m"
                   >
                     My Uploads{" "}
-                  </a>
+                  </div>
                 </li>
               </ul>
             </div>
