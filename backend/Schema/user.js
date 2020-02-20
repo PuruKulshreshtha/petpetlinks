@@ -9,7 +9,8 @@ let userData = new Schema({
   lastName: { type: String, required: true },
   termsCondition: Boolean,
   verified: { type: Boolean, default: false },
-  createdOn: { type: Date, default: Date.now }
+  createdOn: { type: Date, default: Date.now },
+  profilePic: { type: String, default: "123.jpg" }
 });
 userData.plugin(uniqueValidator);
 module.exports = mongoose.model("User", userData);

@@ -1,5 +1,7 @@
 let router = require("express").Router();
 import multer from "multer";
+import userSchema from "../Schema/user";
+import { get } from "lodash";
 import profile from "../Schema/profilePic";
 let today = new Date();
 let date =
@@ -15,7 +17,8 @@ let storage = multer.diskStorage({
 });
 
 let upload = multer({ storage: storage });
-//
+//------------------------------Profile pic in user pic
+
 //----------------Profile Upload and new created
 router.post("/profile", upload.single("profilePic"), (req, res) => {
   // console.log("File body", req.files);
@@ -24,45 +27,67 @@ router.post("/profile", upload.single("profilePic"), (req, res) => {
     profilePic: date + "-" + req.file.originalname,
     userId: req.body.userId
   };
-  // console.log(">>>>>>>>>>>>>>...hey Profiule pic", data);
-  profile.find({ userId: data.userId }, (err, resp) => {
-    if (resp.length > 0) {
-      profile.updateOne(
-        { userId: data.userId },
-        { profilePic: data.profilePic },
-        (err, resp) => {
-          if (resp) {
-            //console.log("Done");
-            res.send({ YES: "SUCESS" });
-          }
-        }
-      );
-      //console.log("Yes");
-    } else {
-      //console.log("NO");
-      profile.create(data, (err, resl) => {
-        if (resl.length > 0) {
-          res.send(resl);
-        }
-      });
+  //---------------profil in user data
+  userSchema.updateOne(
+    { _id: data.userId },
+    { profilePic: data.profilePic },
+    (err, resp) => {
+      if (err === null) {
+        res.send(data);
+      }
+      //console.log(resp);
     }
-  });
+  );
 });
+// console.log(">>>>>>>>>>>>>>...hey Profiule pic", data);
+//   profile.find({ userId: data.userId }, (err, resp) => {
+//     if (resp.length > 0) {
+//       profile.updateOne(
+//         { userId: data.userId },
+//         { profilePic: data.profilePic },
+//         (err, resp) => {
+//           if (resp) {
+//             //console.log("Done");
+//             res.send({ YES: "SUCESS" });
+//           }
+//         }
+//       );
+//       //console.log("Yes");
+//     } else {
+//       //console.log("NO");
+//       profile.create(data, (err, resl) => {
+//         if (resl.length > 0) {
+//           res.send(resl);
+//         }
+//       });
+//     }
+//   });
+// });
 router.post("/default", (req, res) => {
   //console.log(req.body);
-  profile.find({ userId: req.body.userId }, (err, resp) => {
+  userSchema.find({ _id: req.body.userId }, (err, resp) => {
+    console.log(resp);
     if (resp.length > 0) {
-      //console.log(resp);
       let image = {
-        profilePic: resp[0].profilePic
+        profilePic: get(resp[0], "profilePic", "123.jpg")
       };
-      res.send(image);
-    } else {
-      let image = {
-        profilePic: "123.jpg"
-      };
+
       res.send(image);
     }
   });
+  // profile.find({ userId: req.body.userId }, (err, resp) => {
+  //   if (resp.length > 0) {
+  //     //console.log(resp);
+  //     let image = {
+  //       profilePic: resp[0].profilePic
+  //     };
+  //     res.send(image);
+  //   } else {
+  //     let image = {
+  //       profilePic: "123.jpg"
+  //     };
+  //     res.send(image);
+  //   }
+  // });
 });
 module.exports = router;

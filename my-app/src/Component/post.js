@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { Link } from "react-router-dom";
 import { get } from "lodash";
 import callApi from "../api";
@@ -6,7 +6,7 @@ import LIKEBUTTON from "./like";
 import config from "../config";
 const { ROUTES, SERVER_URL } = config;
 
-class post extends Component {
+class post extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -79,7 +79,8 @@ class post extends Component {
   };
   render() {
     let { data } = this.props;
-    //console.log(">>>>>>>>>>>>>>>>>>>>POST CONSOLE", data);
+    console.log(">>>>>>>>>>>>>>>>>>>>POST CONSOLE");
+    let image = get(data.author, "profilePic", "123.jpg");
     let date = new Date(data.time);
     let requiredDateString = `${date.getDate()} ${
       this.monthMap[date.getMonth()]
@@ -96,7 +97,14 @@ class post extends Component {
           </div>
           <div className="div_top">
             <div className="div_top_lft">
-              <img src="/images/img_6.png" alt="" />
+              <img
+                src={SERVER_URL + "/" + image}
+                height="40px"
+                width="40px"
+                style={{ borderRadius: "20px" }}
+                alt=""
+              />
+              {/* <img src="/images/img_6.png" alt="" /> */}
               {/*Steave Waugh*/}
               {get(data.author, "username", "----")}
             </div>
@@ -105,6 +113,7 @@ class post extends Component {
               <span className="span_time"></span>
             </div>
           </div>
+          <br></br>
           <div className="div_image">
             <Link to={"/singlePost/" + data._id}>
               {" "}
