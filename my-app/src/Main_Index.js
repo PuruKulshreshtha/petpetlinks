@@ -4,7 +4,7 @@ import { filterfunc } from "./Redux/Action/postAction";
 import store from "./Redux/store";
 import config from "./config";
 import callApi from "./api";
-import { orderBy } from "lodash";
+// import { orderBy } from "lodash";
 const { ROUTES } = config;
 
 class Main_Index extends React.Component {
@@ -16,7 +16,7 @@ class Main_Index extends React.Component {
   latest_first = data => {
     callApi({ url: ROUTES.FILTER, data: data, method: "POST" }).then(res => {
       store.dispatch(filterfunc(res.data));
-      console.log(res);
+      // console.log(res);
     });
   };
 
