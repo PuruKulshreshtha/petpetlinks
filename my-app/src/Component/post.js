@@ -9,9 +9,7 @@ const { ROUTES, SERVER_URL } = config;
 class post extends PureComponent {
   constructor(props) {
     super(props);
-    this.state = {
-      emailShare: ""
-    };
+    this.state = {};
     this.monthMap = {
       0: "Jan",
       1: "Feb",
@@ -27,13 +25,13 @@ class post extends PureComponent {
       11: "Dec"
     };
   }
-  changeState = e => {
-    const value = e.target.value;
-    const name = e.target.name;
-    this.setState({
-      [name]: value
-    });
-  };
+  // changeState = e => {
+  //   const value = e.target.value;
+  //   const name = e.target.name;
+  //   this.setState({
+  //     [name]: value
+  //   });
+  // };
   toggleShare = id => {
     let temp = this.state.toggleShare;
     if (!temp) {
@@ -43,11 +41,13 @@ class post extends PureComponent {
     }
   };
 
-  share = (id, name) => {
+  share = (id, name, e) => {
+    e.preventDefault();
+    // console.log("Hello");
     let data = {
       id: id,
       name: name,
-      emailShare: this.state.emailShare
+      emailShare: e.target.emailShare.value
     };
 
     callApi({ method: "POST", url: ROUTES.SHARE, data: data }).then(
@@ -58,7 +58,7 @@ class post extends PureComponent {
         });
       }
     );
-    this.setState({ emailShare: "" });
+
     this.toggleShare();
   };
 
@@ -79,7 +79,7 @@ class post extends PureComponent {
   };
   render() {
     let { data } = this.props;
-    console.log(">>>>>>>>>>>>>>>>>>>>POST CONSOLE");
+    // console.log(">>>>>>>>>>>>>>>>>>>>POST CONSOLE");
     let image = get(data.author, "profilePic", "123.jpg");
     let date = new Date(data.time);
     let requiredDateString = `${date.getDate()} ${
@@ -196,15 +196,13 @@ class post extends PureComponent {
           <div>
             {this.state.toggleShare && data._id === this.state.opendedId ? (
               <form
-                onSubmit={() =>
-                  this.share(data._id, localStorage.getItem("username"))
+                onSubmit={e =>
+                  this.share(data._id, localStorage.getItem("username"), e)
                 }
               >
                 <input
                   type="email"
                   name="emailShare"
-                  value={this.state.emailShare}
-                  onChange={this.changeState}
                   style={{ borderRadius: 10 }}
                 ></input>
                 <input
