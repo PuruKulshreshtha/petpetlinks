@@ -1,4 +1,4 @@
-import { AllPost, Like, SinglePost, filter } from "../Constant";
+import { AllPost, Like, SinglePost, filter, comment } from "../Constant";
 
 export const post = (postData, postCount, skipCount, hasMore, categoryId) => {
   //console.log(">>>>>>>>>>>>>>", hasMore);
@@ -32,5 +32,13 @@ export const filterfunc = filterData => {
   return {
     type: filter,
     filterData: filterData
+  };
+};
+
+export const commentInc = commentData => {
+  console.log("?>>>>>>>>>>>>>>>>>>>>>>>??????????????", commentData);
+  return {
+    type: comment,
+    commentData: commentData
   };
 };

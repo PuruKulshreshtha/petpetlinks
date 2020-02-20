@@ -1,7 +1,7 @@
 const nodemailer = require("nodemailer");
 import { Email, Password } from "./credential";
 const sendMail = async data => {
-  console.log("data in mail", data);
+  // console.log("data in mail", data);
 
   let testAccount = await nodemailer.createTestAccount();
 

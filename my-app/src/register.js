@@ -26,11 +26,11 @@ class Register extends React.Component {
 
   sendData = e => {
     e.preventDefault();
-    console.log("prevent", this.state);
+    // console.log("prevent", this.state);
 
     let checkboxCheck = document.getElementById("terms_condition").checked;
     if (checkboxCheck) {
-      console.log("Anurag");
+      // console.log("Anurag");
       //console.log("Checked",checkboxCheck);
       let p = true;
       this.setState({ terms_condition: p });

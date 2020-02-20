@@ -5,3 +5,4 @@ export const SinglePost = "Single_Post";
 export const Comment = "Comment";
 export const newComment = "newComment";
 export const filter = "filter";
+export const comment = "comment";

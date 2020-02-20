@@ -14,13 +14,13 @@ class VerificationPage extends React.Component {
   }
 
   verifying = () => {
-    console.log("verify");
+    // console.log("verify");
     let data = {
       userId: this.props.match.params.id
     };
 
     axios.post(`${SERVER_URL}/${ROUTES.VERIFY}`, data).then(responce => {
-      console.log("response", responce);
+      // console.log("response", responce);
       let resultFromDatabase = responce.data.status;
       this.setState({ resultFromDatabase });
       if (resultFromDatabase === "verified") {

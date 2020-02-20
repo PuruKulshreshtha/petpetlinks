@@ -4,7 +4,7 @@ import Post from "./Component/post";
 import callApi from "./api";
 import { connect } from "react-redux";
 import RightContiner from "./rightContainer";
-import { singlePost } from "./Redux/Action/postAction";
+import { singlePost, commentInc } from "./Redux/Action/postAction";
 import { comment, addComment } from "./Redux/Action/commentAction";
 
 import store from "./Redux/store";
@@ -56,7 +56,8 @@ class SinglePost extends React.Component {
         response => {
           if (response) {
             store.dispatch(addComment(response.data));
-
+            // console.log(">>>>>>>>>", data.postId);
+            store.dispatch(commentInc(data));
             this.posts();
           }
           this.commentRef.current.value = "";

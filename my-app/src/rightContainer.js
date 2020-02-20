@@ -125,7 +125,7 @@ class RightContiner extends React.Component {
             //onChange={this.changeState}
             required
           />
-          <div onClick={this.handleCategory}>
+          <div style={{ display: "inline" }} onClick={this.handleCategory}>
             <img
               height="15px"
               width="20px"
@@ -133,7 +133,7 @@ class RightContiner extends React.Component {
               src="/images/close.ico"
             ></img>
           </div>
-          <input type="submit" />
+          <input style={{ marginTop: "5px" }} type="submit" />
         </form>
       </div>
     );
@@ -146,7 +146,7 @@ class RightContiner extends React.Component {
     callApi({ url: ROUTES.POST_COUNT, method: "POST", data: postby }).then(
       resp => {
         postCounts = resp.data.count;
-        console.log(">>>>", postCounts);
+        // console.log(">>>>", postCounts);
         let { skipCount, limitCount } = this.props;
 
         if (skipCount > postCounts) {
@@ -159,11 +159,11 @@ class RightContiner extends React.Component {
             category: { categoryId: category }
           };
 
-          console.log(">>>>>DTAA IN category", data);
+          // console.log(">>>>>DTAA IN category", data);
           callApi({ url: ROUTES.ALL_POSTS, method: "POST", data: data }).then(
             response => {
               const content = response.data.dataFromDatabase;
-              console.log("Content", content);
+              // console.log("Content", content);
 
               store.dispatch(post(content, postCounts, 0, true));
             }

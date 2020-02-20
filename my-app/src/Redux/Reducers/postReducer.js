@@ -1,4 +1,4 @@
-import { AllPost, Like, SinglePost, filter } from "../Constant";
+import { AllPost, Like, SinglePost, filter, comment } from "../Constant";
 import findIndex from "lodash/findIndex";
 
 const initialState = {
@@ -65,6 +65,21 @@ const postReducer = (state = initialState, action) => {
         singePostData: action.singePostData
       };
     }
+
+    case comment: {
+      let updatedContent = [...state.postData],
+        activeIndex = findIndex(state.postData, function(o) {
+          return o._id === action.commentData.postId;
+        });
+      if (activeIndex !== -1) {
+        updatedContent[activeIndex].commentNo += 1;
+      }
+      return {
+        ...state,
+        postData: updatedContent
+      };
+    }
+
     case filter: {
       return {
         ...state,
