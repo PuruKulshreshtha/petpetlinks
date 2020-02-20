@@ -1,4 +1,5 @@
-import { AllPost, Like, SinglePost } from "../Constant";
+import { AllPost, Like, SinglePost, filter } from "../Constant";
+import findIndex from "lodash/findIndex";
 
 const initialState = {
   postData: [],
@@ -34,14 +35,25 @@ const postReducer = (state = initialState, action) => {
         };
       }
     case Like: {
-      const updatedContent = state.postData.map(data => {
-        if (data._id === action.singePostData._id) {
-          data.like = action.singePostData.like;
-          return data;
-        } else {
-          return data;
-        }
-      });
+      let updatedContent = [...state.postData],
+        activeIndex = findIndex(state.postData, function(o) {
+          return o._id === action.singePostData._id;
+        });
+
+      if (activeIndex !== -1) {
+        updatedContent[activeIndex] = action.singePostData;
+      }
+      // console.log("active incdex", activeIndex);
+      // const updatedContent = state.postData.map(data => {
+      //   if (data._id === action.singePostData._id) {
+      //     // console.log("no", data._id, action.singePostData._id);
+      //     // console.log("Yes", data.like, action.singePostData.like);
+      //     data.like = action.singePostData.like;
+      //     return data;
+      //   } else {
+      //     return data;
+      //   }
+      // });
       return {
         ...state,
         postData: updatedContent
@@ -51,6 +63,12 @@ const postReducer = (state = initialState, action) => {
       return {
         ...state,
         singePostData: action.singePostData
+      };
+    }
+    case filter: {
+      return {
+        ...state,
+        postData: action.filterData
       };
     }
     default:

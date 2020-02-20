@@ -121,4 +121,12 @@ router.get("/featured", async (req, res) => {
   //console.log("Resuklt in router", result);
   res.send(result);
 });
+//--------------Filter
+router.post("/filter", async (req, res) => {
+  // console.log(">>>>>>>>.", req.body);
+  let result = await Posts.Filter(req.body);
+  // console.log(result);
+  res.send(result);
+});
+
 module.exports = router;

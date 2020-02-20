@@ -6,7 +6,7 @@ import { like } from "../Redux/Action/postAction";
 import store from "../Redux/store";
 const { ROUTES } = config;
 
-class LikeButton extends React.Component {
+class LikeButton extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {};
@@ -26,6 +26,7 @@ class LikeButton extends React.Component {
       //console.log("REs>", response);
       let pathname = this.props.location.pathname;
       let result = ["/timeline", "/index"].includes(pathname);
+      // console.log(result);
       if (result) {
         store.dispatch(like(response.data));
       } else {

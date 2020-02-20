@@ -2,7 +2,7 @@ let router = require("express").Router();
 import multer from "multer";
 import userSchema from "../Schema/user";
 import { get } from "lodash";
-import profile from "../Schema/profilePic";
+
 let today = new Date();
 let date =
   today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();

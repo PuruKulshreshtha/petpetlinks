@@ -1,4 +1,4 @@
-import { AllPost, Like, SinglePost } from "../Constant";
+import { AllPost, Like, SinglePost, filter } from "../Constant";
 
 export const post = (postData, postCount, skipCount, hasMore, categoryId) => {
   //console.log(">>>>>>>>>>>>>>", hasMore);
@@ -24,5 +24,13 @@ export const singlePost = singePostData => {
   return {
     type: SinglePost,
     singePostData: singePostData.dataFromDatabase
+  };
+};
+
+export const filterfunc = filterData => {
+  // console.log("?>>>>>>>>>>>>>>>>>>>>>>>??????????????", singePostData);
+  return {
+    type: filter,
+    filterData: filterData
   };
 };

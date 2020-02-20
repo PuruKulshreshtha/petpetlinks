@@ -271,7 +271,18 @@ module.exports = {
         });
     });
   },
-
+  Filter: data => {
+    return new Promise((res, rej) => {
+      timelineSchema
+        .find({})
+        .sort(data)
+        .populate("author")
+        .populate("categoryId")
+        .then(resp => {
+          res(resp);
+        });
+    });
+  },
   like: req => {
     return new Promise((res, rej) => {
       //console.log("hello");
@@ -322,6 +333,7 @@ module.exports = {
       );
     });
   },
+
   Featured: () => {
     return new Promise((res, rej) => {
       timelineSchema

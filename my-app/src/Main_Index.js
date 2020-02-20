@@ -1,47 +1,28 @@
 import React from "react";
-
+// import { connect } from "react-redux";
+import { filterfunc } from "./Redux/Action/postAction";
+import store from "./Redux/store";
+import config from "./config";
+import callApi from "./api";
 import { orderBy } from "lodash";
+const { ROUTES } = config;
+
 class Main_Index extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
   }
 
-  latest_first = () => {
-    let { onChangeFilter, contentCopy } = this.props;
-    let Latest = orderBy(contentCopy, "time", "desc");
-    //this.setState({content:Latest});
-    onChangeFilter(Latest);
-  };
-  mostcommented = () => {
-    let { onChangeFilter, contentCopy } = this.props;
-    let mostcommentedpost = orderBy(contentCopy, "commentNo", "desc");
-    //console.log("most commented response",mostcommentedpost);
-    // this.setState({content:mostcommentedpost});
-    onChangeFilter(mostcommentedpost);
-  };
-  mostclicked = () => {
-    let { onChangeFilter, contentCopy } = this.props;
-    let mostclick = orderBy(contentCopy, "like.length", "desc");
-    //console.log("most Clicked response",mostclick);
-    //this.setState({content:mostclick});
-    onChangeFilter(mostclick);
-  };
-  Oldest_First = () => {
-    let { onChangeFilter, contentCopy } = this.props;
-    let Oldest = orderBy(contentCopy, "time", "asc");
-    // console.log("oldest",Oldest);
-    //this.setState({content:Oldest});
-    onChangeFilter(Oldest);
+  latest_first = data => {
+    callApi({ url: ROUTES.FILTER, data: data, method: "POST" }).then(res => {
+      store.dispatch(filterfunc(res.data));
+      console.log(res);
+    });
   };
 
   componentDidMount() {
-    // console.log(this.state.Error);
-
     if (localStorage.getItem("ID") != null) {
       this.props.history.push("/index");
-      //this.defaultCategory();
-      //this.allPosts();
     } else {
       this.props.history.push("/login");
     }
@@ -67,7 +48,7 @@ class Main_Index extends React.Component {
           <div className="post_list">
             <ul>
               <li>
-                <div>
+                <div onClick={() => this.latest_first({ time: -1 })}>
                   <span className="list_img">
                     <img src="images/img_1.png" alt="hey" />
                   </span>
@@ -75,7 +56,7 @@ class Main_Index extends React.Component {
                 </div>
               </li>
               <li>
-                <div>
+                <div onClick={() => this.latest_first({ time: 1 })}>
                   <span className="list_img">
                     <img src="images/img_2.png" alt="hey" />
                   </span>
@@ -91,7 +72,7 @@ class Main_Index extends React.Component {
                   </a>
                 </li>*/}
               <li>
-                <div>
+                <div onClick={() => alert("Not Working comming soon")}>
                   <span className="list_img">
                     <img src="images/img_4.png" alt="hey" />
                   </span>
@@ -99,7 +80,7 @@ class Main_Index extends React.Component {
                 </div>
               </li>
               <li>
-                <div>
+                <div onClick={() => this.latest_first({ commentNo: -1 })}>
                   <span className="list_img">
                     <img src="images/img_5.png" alt="hey" />
                   </span>

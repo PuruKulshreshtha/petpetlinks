@@ -4,3 +4,4 @@ export const Like = "Like";
 export const SinglePost = "Single_Post";
 export const Comment = "Comment";
 export const newComment = "newComment";
+export const filter = "filter";

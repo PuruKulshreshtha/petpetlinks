@@ -19,7 +19,8 @@ export default {
     SHARE: "share",
     ALL_POSTS: "time/allPosts",
     FEATURED_POST: "time/featured",
-    POST_COUNT: "time/postCount"
+    POST_COUNT: "time/postCount",
+    FILTER: "time/filter"
   },
   credentials: {
     mailId: "purukul@gmail.com",
