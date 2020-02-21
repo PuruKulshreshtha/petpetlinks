@@ -342,11 +342,15 @@ module.exports = {
               { $pull: { like: req.body.dataUpadteToArray } },
               (err, resl) => {
                 if (err === null) {
-                  timelineSchema.find({ _id: req.body.id }, (err, resp) => {
-                    if (resp.length > 0) {
-                      res(resp);
-                    }
-                  });
+                  timelineSchema
+                    .find({ _id: req.body.id })
+                    .populate("author")
+                    .populate("categoryId")
+                    .then(resp => {
+                      if (resp.length > 0) {
+                        res(resp);
+                      }
+                    });
 
                   //console.log("res",resl);
                 } else {
@@ -361,11 +365,15 @@ module.exports = {
               { $push: { like: req.body.dataUpadteToArray } },
               (err, resl) => {
                 if (err === null) {
-                  timelineSchema.find({ _id: req.body.id }, (err, reslt) => {
-                    if (reslt.length > 0) {
-                      res(reslt);
-                    }
-                  });
+                  timelineSchema
+                    .find({ _id: req.body.id })
+                    .populate("author")
+                    .populate("categoryId")
+                    .then(resp => {
+                      if (resp.length > 0) {
+                        res(resp);
+                      }
+                    });
 
                   //console.log("res",resl);
                 } else {
