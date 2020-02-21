@@ -110,7 +110,7 @@ class Main_timeline extends React.Component {
           </div>
           <div className="timeline_div">
             <div className="timeline_div1">
-              <div className="profile_pic">
+              <div style={{ borderRadius: "10px" }} className="profile_pic">
                 <div>
                   <Dropzone
                     onDrop={acceptedFiles => this.profileChange(acceptedFiles)}
@@ -120,6 +120,7 @@ class Main_timeline extends React.Component {
                         <div {...getRootProps()}>
                           <input {...getInputProps()} />
                           <img
+                            style={{ borderRadius: "10px" }}
                             src={`${SERVER_URL}/${this.state.profilePic}`}
                             alt=""
                           />

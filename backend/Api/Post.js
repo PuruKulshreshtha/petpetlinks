@@ -53,6 +53,51 @@ module.exports = {
     });
   },
 
+  allPost: data => {
+    return new Promise((res, rej) => {
+      // console.log("data", data);
+
+      timelineSchema
+        .find({})
+        .populate({ path: "author", model: "User" })
+        .populate({ path: "categoryId", model: "Category" })
+        .skip(data.skipCount)
+        .limit(data.limitCount)
+        .sort({ time: -1 })
+        .then(resul => {
+          // console.log(err)
+          //console.log("allpost",resul)
+          if (resul) {
+            //resul.author=author
+            //console.log(resul.author.name);
+            let arr = [...resul];
+            for (var i = 0; i < arr.length; i++) {
+              let val = arr[i];
+              var dimensions = sizeOf(`Uploads/${val.selectedFiles}`);
+              let dimension = {
+                height: dimensions.height,
+                width: dimensions.width
+              };
+              //arr[i].imageWidth = dimension;
+              //console.log("DIM", dimension);
+              let obj = JSON.parse(JSON.stringify(arr[i]));
+              obj.dimensions = dimension;
+              //console.log(">>>>>>>>>>>>>>>>>>>>>>>>>", obj);
+              arr[i] = obj;
+            }
+
+            //console.log("arr", arr);
+            let addStatusInResult = {
+              dataFromDatabase: arr,
+
+              status: "Profile Inserted"
+            };
+            // console.log(".>>>>>>>>>", addStatusInResult.dataFromDatabase);
+            res(addStatusInResult);
+          }
+        });
+    });
+  },
   allPosts: data => {
     return new Promise((res, rej) => {
       // console.log("data", data);

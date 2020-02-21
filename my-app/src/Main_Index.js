@@ -76,7 +76,7 @@ class Main_Index extends React.Component {
                   <span className="list_img">
                     <img src="images/img_4.png" alt="hey" />
                   </span>
-                  Most Clicks
+                  Most Likes
                 </div>
               </li>
               <li>

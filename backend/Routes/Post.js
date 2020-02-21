@@ -37,10 +37,18 @@ router.post("/timeline", upload.single("selectedFiles"), async (req, res) => {
   res.send(result);
 });
 
-//---------------------------All posts  while page load react native and React
+//---------------------------All posts  while page load in React
 router.post("/allPosts", async (req, res) => {
   // console.log("res", req.body);
+
   let result = await Posts.allPosts(req.body);
+  res.send(result);
+});
+//;--------------------------------All posts  while page load react native
+router.post("/allPost", async (req, res) => {
+  // console.log("res", req.body);
+
+  let result = await Posts.allPost(req.body);
   res.send(result);
 });
 //--------------------------Post count
@@ -100,7 +108,7 @@ router.post("/saveComment", async (req, res) => {
 
 //------------------Like
 router.post("/like", async (req, res) => {
-  //console.log("fsdnj",req.body.dataUpadteToArray);
+  // console.log("fsdnj", req.body);
   let result = await Posts.like(req);
   res.send(result);
 });
