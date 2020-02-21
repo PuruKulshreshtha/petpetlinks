@@ -66,7 +66,7 @@ router.post("/profile", upload.single("profilePic"), (req, res) => {
 router.post("/default", (req, res) => {
   //console.log(req.body);
   userSchema.find({ _id: req.body.userId }, (err, resp) => {
-    console.log(resp);
+    // console.log(resp);
     if (resp.length > 0) {
       let image = {
         profilePic: get(resp[0], "profilePic", "123.jpg")

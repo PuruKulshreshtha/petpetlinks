@@ -21,8 +21,8 @@ class Timeline extends React.Component {
   loadMorePosts = ({
     postBy = this.props.categoryId,
     skipCount = this.props.skipCount,
-    limitCount = this.props.limitCount,
-    categoryId = this.props.categoryId
+    limitCount = this.props.limitCount
+    // categoryId = this.props.categoryId
   }) => {
     let postCounts = 0;
     callApi({ url: ROUTES.POST_COUNT, method: "POST", data: postBy }).then(

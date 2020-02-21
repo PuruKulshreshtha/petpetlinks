@@ -35,7 +35,7 @@ router.post("/signup", urlencodedParser, async (req, res) => {
     mail(Info_for_sendingmail);
     res.send(result);
   } else {
-    console.log("result", result);
+    // console.log("result", result);
     res.send(result);
   }
 });

@@ -56,7 +56,7 @@ module.exports = {
           };
           res(addStatusInResult);
 
-          console.log("User Created Successful");
+          // console.log("User Created Successful");
           //console.log(data);
         } else {
           let addStatusInResult = {
@@ -117,7 +117,7 @@ module.exports = {
     });
   },
   changePassword: data => {
-    console.log(data);
+    // console.log(data);
     return new Promise((res, rej) => {
       schema.updateOne(
         { _id: data.userId },
