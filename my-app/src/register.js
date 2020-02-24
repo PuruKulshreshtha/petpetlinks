@@ -34,7 +34,7 @@ class Register extends React.Component {
       //console.log("Checked",checkboxCheck);
       let p = true;
       this.setState({ terms_condition: p });
-      console.log("Resdsdmfsdmf", this.state.terms_condition);
+      // console.log("Resdsdmfsdmf", this.state.terms_condition);
     } else {
       // console.log("Resdsdmfsdmf",this.state.terms_condition);
       //console.log("NOt Checked")

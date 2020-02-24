@@ -9,7 +9,7 @@ import { categories } from "./Redux/Action/categoryAction";
 import store from "./Redux/store";
 const { ROUTES } = config;
 
-class RightContiner extends React.Component {
+class RightContiner extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {

@@ -7,7 +7,7 @@ import callApi from "./api";
 // import { orderBy } from "lodash";
 const { ROUTES } = config;
 
-class Main_Index extends React.Component {
+class Main_Index extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {};

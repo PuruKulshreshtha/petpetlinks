@@ -7,13 +7,15 @@ class Main_timeline extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      profilePic: "123.jpg"
+      // profilePic: "123.jpg"
     };
+    this.profilePic = localStorage.getItem("profilePic");
     //console.log(">>>>>>>>>>>>>>>>>>>", props);
   }
   getFileExtension = filename => {
     return /[.]/.exec(filename) ? /[^.]+$/.exec(filename)[0] : undefined;
   };
+
   defaultProfile = () => {
     let data = {
       userId: localStorage.getItem("ID")
@@ -21,9 +23,10 @@ class Main_timeline extends React.Component {
     callApi({ url: ROUTES.DEFAULT_PIC, data: data, method: "POST" }).then(
       response => {
         // console.log("Default", response.data);
-        let profilePic = response.data.profilePic;
+        let profilePic1 = response.data.profilePic;
         //console.log(">>>>>>????????>>>>>>>>>", profilePic);
-        this.setState({ profilePic: profilePic });
+        this.profilePic = profilePic1;
+        //this.setState({ profilePic: profilePic });
       }
     );
   };
@@ -121,7 +124,7 @@ class Main_timeline extends React.Component {
                           <input {...getInputProps()} />
                           <img
                             style={{ borderRadius: "10px" }}
-                            src={`${SERVER_URL}/${this.state.profilePic}`}
+                            src={`${SERVER_URL}/${this.profilePic}`}
                             alt=""
                           />
                         </div>

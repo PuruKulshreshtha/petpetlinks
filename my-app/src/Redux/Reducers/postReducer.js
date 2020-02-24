@@ -5,7 +5,7 @@ const initialState = {
   postData: [],
   singePostData: [],
   skipCount: 0,
-  limitCount: 2,
+  limitCount: 6,
   hasMore: true,
   categoryId: {}
 };

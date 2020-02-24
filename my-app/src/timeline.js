@@ -12,10 +12,11 @@ import RightContiner from "./rightContainer";
 import InfiniteScroll from "react-infinite-scroller";
 
 const { ROUTES } = config;
-class Timeline extends React.Component {
+class Timeline extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {};
+    this.isLoading = false;
   }
 
   loadMorePosts = ({
@@ -24,12 +25,22 @@ class Timeline extends React.Component {
     limitCount = this.props.limitCount
     // categoryId = this.props.categoryId
   }) => {
+    if (this.isLoading) {
+      return;
+    }
     let postCounts = 0;
+    // console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+
+    // console.log(postBy, skipCount, limitCount);
+    this.isLoading = true;
     callApi({ url: ROUTES.POST_COUNT, method: "POST", data: postBy }).then(
       resp => {
         postCounts = resp.data.count;
-
+        // console.log(">>>>>>>>>>>..post count", postCounts);
         if (skipCount > postCounts) {
+          // console.log("qqqqqqqqqq");
+
+          this.isLoading = false;
           store.dispatch(post([], postCounts, skipCount, false, postBy));
           return;
         } else {
@@ -41,7 +52,8 @@ class Timeline extends React.Component {
           callApi({ url: ROUTES.ALL_POSTS, method: "POST", data: data }).then(
             response => {
               const content = response.data.dataFromDatabase;
-
+              // console.log(content);
+              this.isLoading = false;
               store.dispatch(
                 post(content, postCounts, skipCount, true, postBy)
               );
@@ -98,6 +110,7 @@ class Timeline extends React.Component {
             />
 
             <div className="content_lft">
+              {/* <Temp /> */}
               {this.props.match.path === "/timeline" ? (
                 <Maintimeline history={this.props.history} />
               ) : null}
@@ -106,12 +119,13 @@ class Timeline extends React.Component {
               ) : null}
               <div className="contnt_2">
                 <InfiniteScroll
-                  pageStart={0}
+                  pageStart={1}
                   loadMore={this.loadMorePosts}
                   hasMore={hasMoreItems}
-                  threshold={1}
+                  style={{ width: "100%", height: "100%" }}
+                  // threshold={1}
                   loader={
-                    <div key={0}>
+                    <div key={0} style={{ height: "100%", width: "100%" }}>
                       <h1>Loading...</h1>
                     </div>
                   }
