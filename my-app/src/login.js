@@ -46,7 +46,7 @@ class Login extends React.Component {
     //   .post(`${SERVER_URL}/${ROUTES.LOGIN}`, this.state)
     callApi({ method: "POST", url: ROUTES.LOGIN, data: data }).then(
       response => {
-        console.log("-----------", response.data);
+        // console.log("-----------", response.data);
 
         const records = response.data.dataFromDatabase;
         //localStorage.setItem("ID", records[0]._id);
@@ -64,10 +64,7 @@ class Login extends React.Component {
             response.data.dataFromDatabase[0].username
           );
           localStorage.setItem("mail", response.data.dataFromDatabase[0].email);
-          localStorage.setItem(
-            "profilePic",
-            response.data.dataFromDatabase[0].profilePic
-          );
+
           //localStorage.setItem("email", records[0].email);
         }
 

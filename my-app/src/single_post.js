@@ -18,7 +18,20 @@ class SinglePost extends React.Component {
 
     this.commentRef = React.createRef();
     this.state = {};
-
+    this.monthMap = {
+      0: "Jan",
+      1: "Feb",
+      2: "Mar",
+      3: "Apr",
+      4: "May",
+      5: "Jun",
+      6: "July",
+      7: "Aug",
+      8: "Sept",
+      9: "Oct",
+      10: "Nov",
+      11: "Dec"
+    };
     //console.log("this.props", this.props.match.params);
   }
 
@@ -99,6 +112,10 @@ class SinglePost extends React.Component {
                   <ul>
                     {commentArr
                       ? commentArr.map((data, index) => {
+                          let date = new Date(data.time);
+                          let requiredDateString = `${date.getDate()} ${
+                            this.monthMap[date.getMonth()]
+                          },${date.getFullYear()}  ( ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()} )`;
                           return (
                             <div key={index}>
                               <li>
@@ -113,7 +130,17 @@ class SinglePost extends React.Component {
                                     {data.userId.username}
                                   </div>
                                 </div>
-                                <div className="list_info">{data.comment}</div>
+                                <div className="list_info">
+                                  {data.comment}
+                                  <span
+                                    style={{
+                                      float: "right",
+                                      color: "#a5a5a6"
+                                    }}
+                                  >
+                                    {"~ " + requiredDateString}
+                                  </span>
+                                </div>
                               </li>
                             </div>
                           );

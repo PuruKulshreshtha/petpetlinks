@@ -4,12 +4,15 @@ import { get } from "lodash";
 import callApi from "../api";
 import LIKEBUTTON from "./like";
 import config from "../config";
+import ProfilePic from "./profilePic";
 const { ROUTES, SERVER_URL } = config;
 
 class post extends PureComponent {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      profilePopup: false
+    };
     this.monthMap = {
       0: "Jan",
       1: "Feb",
@@ -25,13 +28,11 @@ class post extends PureComponent {
       11: "Dec"
     };
   }
-  // changeState = e => {
-  //   const value = e.target.value;
-  //   const name = e.target.name;
-  //   this.setState({
-  //     [name]: value
-  //   });
-  // };
+  togglePopup = () => {
+    let temp = this.state.profilePopup;
+    this.setState({ profilePopup: !temp });
+  };
+
   toggleShare = id => {
     let temp = this.state.toggleShare;
     if (!temp) {
@@ -43,7 +44,6 @@ class post extends PureComponent {
 
   share = (id, name, e) => {
     e.preventDefault();
-    // console.log("Hello");
     let data = {
       id: id,
       name: name,
@@ -64,11 +64,8 @@ class post extends PureComponent {
 
   downloadFile = image => {
     fetch(`${SERVER_URL}/${image}`).then(response => {
-      //console.log(">>>>>>>>>>>>>>>>>>>>>>>>>> BLOB>>>>>>>>>>>>>", response);
       response.blob().then(blob => {
-        // console.log(">>>>>>>>>>>>>>>>>>>>>>>>>> BLOB>>>>>>>>>>>>>", blob);
         let url = window.URL.createObjectURL(blob);
-        // console.log(">>>>>>>>>>>>>..URL ..>>>>>>>>>>>>>>>>>>>", url);
         let a = document.createElement("a");
         a.href = url;
         a.download = image;
@@ -77,17 +74,31 @@ class post extends PureComponent {
       //window.location.href = response.url;
     });
   };
+
   render() {
     let { data } = this.props;
-    // console.log(">>>>>>>>>>>>>>>>>>>>POST CONSOLE");
     let image = get(data.author, "profilePic", "123.jpg");
     let date = new Date(data.time);
+    let hours = date.getHours() > 12 ? date.getHours() - 12 : date.getHours();
+    let am_pm = date.getHours() >= 12 ? "PM" : "AM";
+    hours = hours < 10 ? "0" + hours : hours;
+    let minutes =
+      date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+
+    let time = hours + ":" + minutes + " " + am_pm;
     let requiredDateString = `${date.getDate()} ${
       this.monthMap[date.getMonth()]
-    },${date.getFullYear()}  ( ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()} )`;
+    },${date.getFullYear()}  ( ${time} )`;
 
     return (
       <div>
+        {this.state.profilePopup ? (
+          <ProfilePic
+            closePopup={this.togglePopup}
+            image={SERVER_URL + "/" + image}
+            name={get(data.author, "username", "----").toUpperCase()}
+          />
+        ) : null}
         <div className="div_a">
           <div className="div_title">{data.title}</div>
           <div className="btm_rgt">
@@ -97,19 +108,21 @@ class post extends PureComponent {
           </div>
           <div className="div_top">
             <div className="div_top_lft">
-              <img
-                src={SERVER_URL + "/" + image}
-                height="40px"
-                width="40px"
-                style={{ borderRadius: "20px" }}
-                alt=""
-              />
-              {/* <img src="/images/img_6.png" alt="" /> */}
-              {/*Steave Waugh*/}
-              {get(data.author, "username", "----")}
-            </div>
+              <div onClick={this.togglePopup}>
+                <img
+                  src={SERVER_URL + "/" + image}
+                  height="40px"
+                  width="40px"
+                  style={{ borderRadius: "20px" }}
+                  alt=""
+                />
+                {/* <img src="/images/img_6.png" alt="" /> */}
+
+                {get(data.author, "username", "----")}
+              </div>{" "}
+            </div>{" "}
             <div className="div_top_rgt">
-              <span className="span_date">{requiredDateString}</span>
+              <span className="span_date">{"~ " + requiredDateString}</span>
               <span className="span_time"></span>
             </div>
           </div>
