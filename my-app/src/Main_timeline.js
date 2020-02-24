@@ -1,16 +1,15 @@
 import React from "react";
 import config from "./config";
 import callApi from "./api";
+import { get } from "lodash";
 import Dropzone from "react-dropzone";
 const { ROUTES, SERVER_URL } = config;
 class Main_timeline extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      // profilePic: "123.jpg"
+      profilePic: "123.jpg"
     };
-    this.profilePic = localStorage.getItem("profilePic");
-    //console.log(">>>>>>>>>>>>>>>>>>>", props);
   }
   getFileExtension = filename => {
     return /[.]/.exec(filename) ? /[^.]+$/.exec(filename)[0] : undefined;
@@ -22,20 +21,14 @@ class Main_timeline extends React.Component {
     };
     callApi({ url: ROUTES.DEFAULT_PIC, data: data, method: "POST" }).then(
       response => {
-        // console.log("Default", response.data);
         let profilePic1 = response.data.profilePic;
-        //console.log(">>>>>>????????>>>>>>>>>", profilePic);
-        this.profilePic = profilePic1;
-        //this.setState({ profilePic: profilePic });
+        this.setState({ profilePic: profilePic1 });
       }
     );
   };
   profileChange = pic => {
-    //console.log(">>>>>>>>>>>>>..profileChange", pic[0]);
     let fd = new FormData();
-
     let extension = this.getFileExtension(pic[0].name);
-    //console.log(">>>>>>e", extension);
     if (
       extension === "jpg" ||
       extension === "png" ||
@@ -51,7 +44,6 @@ class Main_timeline extends React.Component {
         method: "POST"
       }).then(response => {
         this.defaultProfile();
-        //console.log("HEY ", response);
       });
     } else {
       alert("Invalid File format");
@@ -79,23 +71,20 @@ class Main_timeline extends React.Component {
   //   this.setState({ content: myUploadsData });
   // };
   componentDidMount() {
-    // console.log(this.state.Error);
-
     if (localStorage.getItem("ID") !== null) {
       this.props.history.push("/timeline");
       this.defaultProfile();
-      //
-      //this.defaultCategory();
-      //this.allPosts();
     } else {
       this.props.history.push("/login");
     }
   }
+
   render() {
     let name = localStorage.getItem("username");
     if (name !== null) {
       name = name.toUpperCase();
     }
+    let profilePic = get(this.state, "profilePic", "123.jpg");
     return (
       <div>
         <div className="contnt_1">
@@ -124,7 +113,7 @@ class Main_timeline extends React.Component {
                           <input {...getInputProps()} />
                           <img
                             style={{ borderRadius: "10px" }}
-                            src={`${SERVER_URL}/${this.profilePic}`}
+                            src={`${SERVER_URL}/${profilePic}`}
                             alt=""
                           />
                         </div>
