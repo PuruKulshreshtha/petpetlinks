@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 
 import config from "./config";
+import callApi from "./api";
 
 const { ROUTES, SERVER_URL } = config;
 
@@ -19,14 +20,16 @@ class VerificationPage extends React.Component {
       userId: this.props.match.params.id
     };
 
-    axios.post(`${SERVER_URL}/${ROUTES.VERIFY}`, data).then(responce => {
-      // console.log("response", responce);
-      let resultFromDatabase = responce.data.status;
-      this.setState({ resultFromDatabase });
-      if (resultFromDatabase === "verified") {
-        this.props.history.push("/login");
+    callApi({ url: ROUTES.VERIFY, data: data, method: "POST" }).then(
+      responce => {
+        // console.log("response", responce);
+        let resultFromDatabase = responce.data.status;
+        this.setState({ resultFromDatabase });
+        if (resultFromDatabase === "verified") {
+          this.props.history.push("/login");
+        }
       }
-    });
+    );
   };
   componentDidMount() {
     if (this.props.match.params.id !== null) {

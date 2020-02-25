@@ -6,7 +6,6 @@ import Maintimeline from "./Main_timeline";
 import RightContiner from "./rightContainer";
 import InfiniteScroll from "react-infinite-scroller";
 import { loadMorePosts } from "./helpers";
-import CheckboxTimeline from "./Component/checkboxTimeline";
 
 const Post = Loadable({
   loader: () => import("./Component/post"),
@@ -71,7 +70,7 @@ const Timeline = props => {
             </nav>
           </div>
         </div>
-        <div className="clear" />
+        {/* <div className="clear" /> */}
       </div>
     </div>
   );

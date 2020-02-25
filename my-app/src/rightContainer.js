@@ -1,17 +1,23 @@
 import React from "react";
+import Loadable from "react-loadable";
 import Popup from "./Component/popup";
 import config from "./config";
 import callApi from "./api";
 import FEATURED_POST from "./Component/featured";
 import { connect } from "react-redux";
-import { post } from "./Redux/Action/postAction";
+// import { post } from "./Redux/Action/postAction";
 import store from "./Redux/store";
 import { loadMorePosts, defaultCategory, getFileExtension } from "./helpers";
 import CategoryUpload from "./Component/categoryUpload";
 import Rightbtn from "./Component/right_btn";
 
 const { ROUTES } = config;
-
+const post = Loadable({
+  loader: () => import("./Redux/Action/postAction"),
+  loading() {
+    return <div>Loading ....... </div>;
+  }
+});
 class RightContiner extends React.PureComponent {
   constructor(props) {
     super(props);

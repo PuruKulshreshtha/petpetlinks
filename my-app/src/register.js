@@ -1,8 +1,8 @@
 import React from "react";
-
-import { Link } from "react-router-dom";
 import callApi from "./api";
 import config from "./config";
+import LoginSignupLeft from "./Component/LoginSignUp/loginSignupLeft";
+import LoginSignUpadditionalInfo from "./Component/LoginSignUp/loginSignUpadditionalInfo";
 const { ROUTES } = config;
 class Register extends React.Component {
   constructor(props) {
@@ -27,32 +27,20 @@ class Register extends React.Component {
   sendData = e => {
     e.preventDefault();
     // console.log("prevent", this.state);
-
     let checkboxCheck = document.getElementById("terms_condition").checked;
     if (checkboxCheck) {
-      // console.log("Anurag");
-      //console.log("Checked",checkboxCheck);
       let p = true;
       this.setState({ terms_condition: p });
       // console.log("Resdsdmfsdmf", this.state.terms_condition);
     } else {
       // console.log("Resdsdmfsdmf",this.state.terms_condition);
-      //console.log("NOt Checked")
     }
-    //console.log("Terms terms_condition",lfckv);
-
-    //axios.post("http://127.0.0.1:8088/process_post",this.state)
 
     callApi({ method: "POST", data: this.state, url: ROUTES.SIGN_UP }).then(
       response => {
         console.log("-----------", response);
         let status = response.data.status;
         this.setState({ status });
-        //alert("Status "+this.state.status);
-        // if(this.state.status==='User Created Successful')
-        // {
-        //   window.setTimeout(this.routingFunction(),5000);
-        // }
       }
     );
   };
@@ -158,26 +146,14 @@ class Register extends React.Component {
                     </li>
                   </ul>
                 </form>
-                <div className="addtnal_acnt">
-                  I already have an account.
-                  <li>
-                    <Link to="/login">Login My Account !</Link>
-                  </li>
-                </div>
+                <LoginSignUpadditionalInfo
+                  text1={"I already have an account."}
+                  text2={"Login My Account !"}
+                  path={"/login"}
+                />
               </div>
             </div>
-            <div className="content_lft">
-              <h1>Welcome from PPL!</h1>
-              <p className="discrptn">
-                There are many variations of passages of Lorem Ipsum available,
-                but the majority have suffered alteration in some form, by
-                injected humour, or randomised words which don't look even
-                slightly believable. If you are going to use a passage of Lorem
-                Ipsum, you need to be sure there isn't anything embarrassing
-                hidden in the middle of text.{" "}
-              </p>
-              <img src="images/img_9.png" alt="" />{" "}
-            </div>
+            <LoginSignupLeft />
           </div>
         </div>
       </div>

@@ -1,14 +1,11 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
 import Register from "./register";
-
 import Login from "./login";
 import Error from "./ErrorPage";
 import Timeline from "./timeline";
 import Forget from "./forget";
 import SinglePost from "./single_post";
-//import Timeline from "./Main_timeline";
-// import Index from "./Main_Index";
 import VerifyPage from "./verificationPage";
 import ChangePassword from "./changePassword";
 

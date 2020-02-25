@@ -1,9 +1,9 @@
 import React from "react";
-
 import { Link } from "react-router-dom";
 import config from "./config";
-
 import callApi from "./api";
+import LoginSignupLeft from "./Component/LoginSignUp/loginSignupLeft";
+import LoginSignUpadditionalInfo from "./Component/LoginSignUp/loginSignUpadditionalInfo";
 const { ROUTES } = config;
 
 //import Child from "./child"
@@ -117,90 +117,69 @@ class Login extends React.Component {
   }
   render() {
     return (
-      <div>
-        {
-          //this.state.ans === "Login Success"
-          //? this.props.history.push("/timeline")
-          //: null
-        }
-        <meta charSet="utf-8" />
-        <title>Login Account</title>
-        <div className="container">
-          <div className="content">
-            <div className="content_rgt">
-              <div className="login_sec">
-                <form onSubmit={this.sendData}>
-                  {this.state.ans ? (
+      <div className="container">
+        <div className="content">
+          <div className="content_rgt">
+            <div className="login_sec">
+              <form onSubmit={this.sendData}>
+                {this.state.ans ? (
+                  <h4 style={{ color: "#f47b13" }}>{this.state.ans}</h4>
+                ) : (
+                  ""
+                )}
+                <h1>Log In</h1>
+                <ul>
+                  <li>
+                    <span>Email-ID</span>
+                    <input
+                      type="text"
+                      name="email"
+                      style={this.state.inputStyle}
+                      // value={this.state.email}
+                      // onChange={this.changeState}
+                      placeholder={this.state.placeEmail}
+                    />
+                  </li>
+                  {this.state.ans === "Invalid User" ? (
                     <h4 style={{ color: "#f47b13" }}>{this.state.ans}</h4>
                   ) : (
                     ""
                   )}
-                  <h1>Log In</h1>
-                  <ul>
-                    <li>
-                      <span>Email-ID</span>
-                      <input
-                        type="text"
-                        name="email"
-                        style={this.state.inputStyle}
-                        // value={this.state.email}
-                        // onChange={this.changeState}
-                        placeholder={this.state.placeEmail}
-                      />
-                    </li>
-                    {this.state.ans === "Invalid User" ? (
-                      <h4 style={{ color: "#f47b13" }}>{this.state.ans}</h4>
-                    ) : (
-                      ""
-                    )}
-                    <li>
-                      <span>Password</span>
-                      <input
-                        type="password"
-                        style={this.state.passwordStyle}
-                        name="password"
-                        // value={this.state.password}
-                        //onChange={this.changeState}
-                        placeholder={this.state.placePass}
-                      />
-                    </li>
-                    {this.state.ans === "Incorrect Password" ? (
-                      <h4 style={{ color: "#f47b13" }}>{this.state.ans}</h4>
-                    ) : (
-                      ""
-                    )}
-                    <li>
-                      <input type="checkbox" />
-                      Remember Me
-                    </li>
-                    <li>
-                      <input type="submit" defaultValue="Log In" />
-
-                      <Link to="/forget">Forget Password</Link>
-                    </li>
-                  </ul>
-                </form>
-                <div className="addtnal_acnt">
-                  I do not have any account yet.
                   <li>
-                    <Link to="/signup">Create My Account Now !</Link>
+                    <span>Password</span>
+                    <input
+                      type="password"
+                      style={this.state.passwordStyle}
+                      name="password"
+                      // value={this.state.password}
+                      //onChange={this.changeState}
+                      placeholder={this.state.placePass}
+                    />
                   </li>
-                </div>
-              </div>
-            </div>
-            <div className="content_lft">
-              <h1>Welcome from PPL!</h1>
-              <p className="discrptn">
-                There are many variations of passages of Lorem Ipsum available,
-                but the majority have suffered alteration in some form, by
-                injected humour, or randomised words which don't look even
-                slightly believable. If you are going to use a passage of Lorem
-                Ipsum, you need to be sure there isn't anything embarrassing
-                hidden in the middle of text.{" "}
-              </p>
-              <img src="images/img_9.png" alt="" />{" "}
+                  {this.state.ans === "Incorrect Password" ? (
+                    <h4 style={{ color: "#f47b13" }}>{this.state.ans}</h4>
+                  ) : (
+                    ""
+                  )}
+                  <li>
+                    <input type="checkbox" />
+                    Remember Me
+                  </li>
+                  <li>
+                    <input type="submit" defaultValue="Log In" />
+
+                    <Link to="/forget">Forget Password</Link>
+                  </li>
+                </ul>
+              </form>
+              <LoginSignUpadditionalInfo
+                text1={" I do not have any account yet."}
+                text2={"Create My Account Now !"}
+                path={"/signup"}
+              />
             </div>
           </div>
+          <LoginSignupLeft />
         </div>
       </div>
     );
