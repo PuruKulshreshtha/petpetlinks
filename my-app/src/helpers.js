@@ -1,7 +1,7 @@
 import { post } from "./Redux/Action/postAction";
 import { categories } from "./Redux/Action/categoryAction";
 import { comment } from "./Redux/Action/commentAction";
-import { singlePost } from "./Redux/Action/postAction";
+import { singlePost, filterfunc } from "./Redux/Action/postAction";
 import store from "./Redux/store";
 import { get } from "lodash";
 import callApi from "./api";
@@ -97,4 +97,21 @@ export const categoryUploadHandler = e => {
         this.props.history.push("/err");
       }
     });
+};
+
+export const getFileExtension = filename => {
+  return /[.]/.exec(filename) ? /[^.]+$/.exec(filename)[0] : undefined;
+};
+
+export const logout = () => {
+  localStorage.removeItem("ID");
+  localStorage.removeItem("email");
+  localStorage.removeItem("username");
+};
+
+export const latest_first = data => {
+  callApi({ url: ROUTES.FILTER, data: data, method: "POST" }).then(res => {
+    store.dispatch(filterfunc(res.data));
+    // console.log(res);
+  });
 };

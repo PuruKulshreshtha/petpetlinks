@@ -3,6 +3,8 @@ import config from "./config";
 import callApi from "./api";
 import { get } from "lodash";
 import Dropzone from "react-dropzone";
+import { getFileExtension } from "./helpers";
+import CheckboxTimeline from "./Component/checkboxTimeline";
 const { ROUTES, SERVER_URL } = config;
 class Main_timeline extends React.Component {
   constructor(props) {
@@ -11,9 +13,6 @@ class Main_timeline extends React.Component {
       profilePic: "123.jpg"
     };
   }
-  getFileExtension = filename => {
-    return /[.]/.exec(filename) ? /[^.]+$/.exec(filename)[0] : undefined;
-  };
 
   defaultProfile = () => {
     let data = {
@@ -28,7 +27,7 @@ class Main_timeline extends React.Component {
   };
   profileChange = pic => {
     let fd = new FormData();
-    let extension = this.getFileExtension(pic[0].name);
+    let extension = getFileExtension(pic[0].name);
     if (
       extension === "jpg" ||
       extension === "png" ||
@@ -53,23 +52,7 @@ class Main_timeline extends React.Component {
   myUploads = () => {
     console.log("My uploads ????????????????");
   };
-  // myUploads = () => {
-  //   //console.log("My uploads")
-  //   let { onChangeMyAlbums, contentCopy } = this.props;
-  //   //console.log("name",this.props.state)
-  //   let mail = localStorage.getItem("mail");
-  //   //console.log("mail is", mail);
-  //   //console.log("fdshfshdf",contentCopy);
-  //   document.getElementById("m").setAttribute("class", "active");
-  //   document.getElementById("t").setAttribute("class", "");
-  //   let myUploadsData = filter(contentCopy, user => {
-  //     return user.author.email === mail;
-  //   });
-  //   //console.log("myupkloadas",myUploadsData);
-  //   onChangeMyAlbums(myUploadsData);
-  //   // console.log("my uploadas data ",myUploadsData);
-  //   this.setState({ content: myUploadsData });
-  // };
+
   componentDidMount() {
     if (localStorage.getItem("ID") !== null) {
       this.props.history.push("/timeline");
@@ -88,18 +71,7 @@ class Main_timeline extends React.Component {
     return (
       <div>
         <div className="contnt_1">
-          <div className="list_1">
-            <ul>
-              <li>
-                <input type="checkbox" className="chk_bx" />
-                Friends
-              </li>
-              <li>
-                <input type="checkbox" className="chk_bx" />
-                Flaged
-              </li>
-            </ul>
-          </div>
+          <CheckboxTimeline />
           <div className="timeline_div">
             <div className="timeline_div1">
               <div style={{ borderRadius: "10px" }} className="profile_pic">
@@ -122,23 +94,7 @@ class Main_timeline extends React.Component {
                   </Dropzone>
                   {/* <img src="images/123.jpg" alt="" /> */}
                 </div>
-                <div className="profile_text">
-                  {/* <Dropzone
-                    onDrop={acceptedFiles => console.log(acceptedFiles)}
-                  >
-                    {({ getRootProps, getInputProps }) => (
-                      <section>
-                        <div {...getRootProps()}>
-                          <input {...getInputProps()} />
-                          <img src="images/123.jpg" alt="" />
-                        </div>
-                      </section>
-                    )}
-                  </Dropzone> */}
-                  {/* <a onClick={() => this.uploadProfilePic}>
-                    Change Profile Pic
-                  </a> */}
-                </div>
+                <div className="profile_text"></div>
               </div>
               <div className="profile_info">
                 <div className="edit_div">

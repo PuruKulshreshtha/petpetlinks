@@ -6,7 +6,7 @@ import FEATURED_POST from "./Component/featured";
 import { connect } from "react-redux";
 import { post } from "./Redux/Action/postAction";
 import store from "./Redux/store";
-import { loadMorePosts, defaultCategory } from "./helpers";
+import { loadMorePosts, defaultCategory, getFileExtension } from "./helpers";
 import CategoryUpload from "./Component/categoryUpload";
 import Rightbtn from "./Component/right_btn";
 
@@ -37,9 +37,8 @@ class RightContiner extends React.PureComponent {
     if (localStorage.getItem("ID") !== null) {
       fd.append("author", localStorage.getItem("ID"));
       //  console.log("Fillllllllllleelelelel", e.target.selectedFiles.files[0]);
-      let extension = this.getFileExtension(
-        e.target.selectedFiles.files[0].name
-      );
+      let extension = getFileExtension(e.target.selectedFiles.files[0].name);
+      // console.log("extension", extension);
       if (
         extension === "jpg" ||
         extension === "png" ||

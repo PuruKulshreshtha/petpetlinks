@@ -6,6 +6,7 @@ import Maintimeline from "./Main_timeline";
 import RightContiner from "./rightContainer";
 import InfiniteScroll from "react-infinite-scroller";
 import { loadMorePosts } from "./helpers";
+import CheckboxTimeline from "./Component/checkboxTimeline";
 
 const Post = Loadable({
   loader: () => import("./Component/post"),
@@ -56,11 +57,7 @@ const Timeline = props => {
                 hasMore={hasMoreItems}
                 style={{ width: "100%", height: "100%" }}
                 // threshold={1}
-                loader={
-                  <div key={0} style={{ height: "100%", width: "100%" }}>
-                    <h1>Loading...</h1>
-                  </div>
-                }
+                loader={0}
               >
                 {content
                   ? content.map((data, index) => {
