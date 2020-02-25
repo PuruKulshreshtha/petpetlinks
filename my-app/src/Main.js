@@ -1,7 +1,7 @@
 import React from "react";
 import Router from "./Router";
-import Header from "./Header";
-import Footer from "./Footer";
+import Header from "./Component/header_fotter/Header";
+import Footer from "./Component/header_fotter/Footer";
 import { Provider } from "react-redux";
 import store from "./Redux/store";
 class Main extends React.Component {

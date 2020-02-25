@@ -1,5 +1,5 @@
 import React from "react";
-import Popup from "./popup";
+import Popup from "./Component/popup";
 import config from "./config";
 import callApi from "./api";
 import FEATURED_POST from "./Component/featured";
