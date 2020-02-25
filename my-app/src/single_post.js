@@ -10,7 +10,7 @@ import { defaultComments, posts } from "./helpers";
 import store from "./Redux/store";
 import isEmpty from "lodash/isEmpty";
 import CommentText from "./Component/comment/commentText";
-import NewComment from "./Component/newComment";
+import NewComment from "./Component/comment/newComment";
 
 const { ROUTES } = config;
 
