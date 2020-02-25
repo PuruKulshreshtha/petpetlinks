@@ -81,51 +81,48 @@ class SinglePost extends React.Component {
     let commentArr = this.props.commentArr;
     return (
       <div>
-        <div>
-          <div className="container">
-            <div className="content">
-              <RightContiner history={this.props.history} />
-              <div className="content_lft">
-                {!isEmpty(content) ? (
-                  <Post data={content} key={content._id} />
-                ) : null}
+        <div className="container">
+          <div className="content">
+            <RightContiner history={this.props.history} />
+            <div className="content_lft">
+              {!isEmpty(content) ? (
+                <Post data={content} key={content._id} />
+              ) : null}
 
-                <div className="contnt_3">
-                  <ul>
-                    {commentArr
-                      ? commentArr.map((data, index) => {
-                          let date = new Date(data.time);
-                          let requiredDateString = `${date.getDate()} ${
-                            this.monthMap[date.getMonth()]
-                          },${date.getFullYear()}  ( ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()} )`;
-                          return (
-                            <CommentText
-                              data={data}
-                              requiredDateString={requiredDateString}
-                              index={index}
-                              key={index}
-                            />
-                          );
-                        })
-                      : null}
-                  </ul>
-                  <ul>
-                    <NewComment
-                      comment={this.comment}
-                      commentRef={this.commentRef}
-                      key={0}
-                    />
-                  </ul>
-                  <div className="view_div">
-                    <div>View more</div>
-                  </div>
+              <div className="contnt_3">
+                <ul>
+                  {commentArr
+                    ? commentArr.map((data, index) => {
+                        let date = new Date(data.time);
+                        let requiredDateString = `${date.getDate()} ${
+                          this.monthMap[date.getMonth()]
+                        },${date.getFullYear()}  ( ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()} )`;
+                        return (
+                          <CommentText
+                            data={data}
+                            requiredDateString={requiredDateString}
+                            index={index}
+                            key={index}
+                          />
+                        );
+                      })
+                    : null}
+                </ul>
+                <ul>
+                  <NewComment
+                    comment={this.comment}
+                    commentRef={this.commentRef}
+                    key={0}
+                  />
+                </ul>
+                <div className="view_div">
+                  <div>View more</div>
                 </div>
               </div>
             </div>
-            <div className="clear" />
           </div>
+          <div className="clear" />
         </div>
-        ;
       </div>
     );
   }

@@ -5,7 +5,6 @@ import config from "./config";
 import callApi from "./api";
 import FEATURED_POST from "./Component/featured";
 import { connect } from "react-redux";
-// import { post } from "./Redux/Action/postAction";
 import store from "./Redux/store";
 import { loadMorePosts, defaultCategory, getFileExtension } from "./helpers";
 import CategoryUpload from "./Component/categoryUpload";

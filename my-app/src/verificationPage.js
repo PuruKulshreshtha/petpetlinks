@@ -1,10 +1,8 @@
 import React from "react";
-import axios from "axios";
-
 import config from "./config";
 import callApi from "./api";
 
-const { ROUTES, SERVER_URL } = config;
+const { ROUTES } = config;
 
 class VerificationPage extends React.Component {
   constructor(props) {
