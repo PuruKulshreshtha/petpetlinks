@@ -7,6 +7,8 @@ import { connect } from "react-redux";
 import { post } from "./Redux/Action/postAction";
 import store from "./Redux/store";
 import { loadMorePosts, defaultCategory } from "./helpers";
+import CategoryUpload from "./Component/categoryUpload";
+import Rightbtn from "./Component/right_btn";
 
 const { ROUTES } = config;
 
@@ -92,10 +94,10 @@ class RightContiner extends React.PureComponent {
     const data = {
       cname: e.target.newCategory.value
     };
-
+    // console.log("hello", data);
     callApi({ method: "POST", url: ROUTES.CATEGORY_UPLOAD, data: data })
       .then(response => {
-        this.defaultCategory();
+        defaultCategory();
         this.handleCategory();
         alert(response.data.status);
       })
@@ -104,31 +106,6 @@ class RightContiner extends React.PureComponent {
           this.props.history.push("/err");
         }
       });
-  };
-
-  categoryForm = () => {
-    return (
-      <div>
-        <form onSubmit={this.categoryUploadHandler}>
-          <input
-            type="text"
-            name="newCategory"
-            //value={this.state.newCategory}
-            //onChange={this.changeState}
-            required
-          />
-          <div style={{ display: "inline" }} onClick={this.handleCategory}>
-            <img
-              height="15px"
-              width="20px"
-              alt="close icon"
-              src="/images/close.ico"
-            ></img>
-          </div>
-          <input style={{ marginTop: "5px" }} type="submit" />
-        </form>
-      </div>
-    );
   };
 
   componentDidMount() {
@@ -140,12 +117,13 @@ class RightContiner extends React.PureComponent {
   }
 
   render() {
+    let { categoriesData } = this.props;
     return (
       <div>
         <div>
           {this.state.status ? (
             <Popup
-              categories={this.props.categoriesData}
+              categories={categoriesData}
               closePopup={this.handleClick}
               fileUpload={this.fileUploadHandler}
               handleChange={this.handleChange}
@@ -153,37 +131,30 @@ class RightContiner extends React.PureComponent {
           ) : null}
         </div>
         <div className="content_rgt">
-          <div className="rght_btn">
-            {" "}
-            <span className="rght_btn_icon">
-              <img src="/images/btn_iconb.png" alt="up" />
-            </span>{" "}
-            <span className="btn_sep">
-              <img src="/images/btn_sep.png" alt="sep" />
-            </span>{" "}
-            <div onClick={this.handleClick}>Upload Post</div>{" "}
-          </div>
+          <Rightbtn
+            text={"Upload Post"}
+            onClickFunc={this.handleClick}
+            image={"/images/btn_iconb.png"}
+          />
+          <Rightbtn
+            text={"Upload Category"}
+            onClickFunc={this.handleCategory}
+            image={"/images/btn_icona.png"}
+          />
 
-          <div className="rght_btn">
-            {" "}
-            <span className="rght_btn_icon">
-              <img src="/images/btn_icona.png" alt="up" />
-            </span>{" "}
-            <span className="btn_sep">
-              <img src="/images/btn_sep.png" alt="sep" />
-            </span>{" "}
-            <div onClick={this.handleCategory}>UploadCategories</div>{" "}
-          </div>
           <div className="rght_cate">
-            <div>{this.state.ans1 ? this.categoryForm() : null}</div>
+            <div>
+              {this.state.ans1 ? (
+                <CategoryUpload handleCategory={this.handleCategory} />
+              ) : null}
+            </div>
             <div className="rght_cate_hd" id="rght_cat_bg">
               Categories
             </div>
             <div className="rght_list">
               <ul>
-                {this.props.categoryStatus === "Category Inserted" ||
-                this.props.categoryStatus === "Category Already Exists"
-                  ? this.props.categoriesData.map((data, index) => {
+                {categoriesData
+                  ? categoriesData.map((data, index) => {
                       return (
                         <li key={index}>
                           <div

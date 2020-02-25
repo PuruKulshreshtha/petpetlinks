@@ -79,3 +79,22 @@ export const posts = id => {
     }
   );
 };
+
+export const categoryUploadHandler = e => {
+  e.preventDefault();
+  const data = {
+    cname: e.target.newCategory.value
+  };
+  // console.log("hello", data);
+  callApi({ method: "POST", url: ROUTES.CATEGORY_UPLOAD, data: data })
+    .then(response => {
+      defaultCategory();
+
+      alert(response.data.status);
+    })
+    .catch(err => {
+      if (err.message === "Network Error") {
+        this.props.history.push("/err");
+      }
+    });
+};
