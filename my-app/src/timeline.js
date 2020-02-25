@@ -1,153 +1,85 @@
-import React from "react";
+import React, { useEffect } from "react";
+import Loadable from "react-loadable";
 import { connect } from "react-redux";
-import { post } from "./Redux/Action/postAction";
-import store from "./Redux/store";
-import { get } from "lodash";
-import Post from "./Component/post";
-import config from "./config";
-import callApi from "./api";
 import Mainindex from "./Main_Index";
 import Maintimeline from "./Main_timeline";
 import RightContiner from "./rightContainer";
 import InfiniteScroll from "react-infinite-scroller";
+import { loadMorePosts } from "./helpers";
 
-const { ROUTES } = config;
-class Timeline extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {};
-    this.isLoading = false;
+const Post = Loadable({
+  loader: () => import("./Component/post"),
+  loading() {
+    return <div>Loading ....... </div>;
   }
+});
 
-  loadMorePosts = ({
-    postBy = this.props.categoryId,
-    skipCount = this.props.skipCount,
-    limitCount = this.props.limitCount
-    // categoryId = this.props.categoryId
-  }) => {
-    if (this.isLoading) {
-      return;
-    }
-    let postCounts = 0;
-    // console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-
-    // console.log(postBy, skipCount, limitCount);
-    this.isLoading = true;
-    callApi({ url: ROUTES.POST_COUNT, method: "POST", data: postBy }).then(
-      resp => {
-        postCounts = resp.data.count;
-        // console.log(">>>>>>>>>>>..post count", postCounts);
-        if (skipCount > postCounts) {
-          // console.log("qqqqqqqqqq");
-
-          this.isLoading = false;
-          store.dispatch(post([], postCounts, skipCount, false, postBy));
-          return;
-        } else {
-          let data = {
-            skipCount: skipCount,
-            limitCount: limitCount,
-            categoryId: get(postBy, "categoryId", null)
-          };
-          callApi({ url: ROUTES.ALL_POSTS, method: "POST", data: data }).then(
-            response => {
-              const content = response.data.dataFromDatabase;
-              // console.log(content);
-              this.isLoading = false;
-              store.dispatch(
-                post(content, postCounts, skipCount, true, postBy)
-              );
-            }
-          );
-        }
-      }
-    );
-  };
-
-  // allPosts = () => {
-  //   console.log("chal raha hu");
-  //   callApi({ url: ROUTES.ALL_POST })
-  //     .then(response => {
-  //       // console.log("Response form all post-----------", response);
-  //       // let responseFromDatabase = response.data.dataFromDatabase;
-  //       //console.log("Response of Database ", responseFromDatabase);
-  //       const content = response.data.dataFromDatabase;
-  //       content.reverse();
-  //       let contentCopy = content;
-  //       let ans = response.data.status;
-  //       this.setState({ content, ans, contentCopy });
-  //     })
-  //     .catch(err => {
-  //       console.log("Err", err);
-  //       if (err.message === "Network Error") {
-  //         this.setState({ Error: true });
-  //         console.log("Server is Not Running");
-  //         this.props.history.push("/err");
-  //       }
-  //     });
-  // };
-
-  componentDidMount() {
+const Timeline = props => {
+  useEffect(() => {
     if (localStorage.getItem("ID") !== null) {
-      if (this.props.match.path === "/") {
-        this.props.history.push("/index");
+      if (props.match.path === "/") {
+        props.history.push("/index");
       }
     } else {
-      this.props.history.push("/login");
+      props.history.push("/login");
     }
-  }
-  render() {
-    let { content, hasMoreItems } = this.props;
-    // console.log("rendering");
-    return (
-      <div>
-        <title>Home</title>
-        <div className="container">
-          <div className="content">
-            <RightContiner
-              loadMore={this.loadMorePosts}
-              history={this.props.history}
-            />
+  }, [props]);
 
-            <div className="content_lft">
-              {/* <Temp /> */}
-              {this.props.match.path === "/timeline" ? (
-                <Maintimeline history={this.props.history} />
-              ) : null}
-              {this.props.match.path === "/index" ? (
-                <Mainindex history={this.props.history} />
-              ) : null}
-              <div className="contnt_2">
-                <InfiniteScroll
-                  pageStart={1}
-                  loadMore={this.loadMorePosts}
-                  hasMore={hasMoreItems}
-                  style={{ width: "100%", height: "100%" }}
-                  // threshold={1}
-                  loader={
-                    <div key={0} style={{ height: "100%", width: "100%" }}>
-                      <h1>Loading...</h1>
-                    </div>
-                  }
-                >
-                  {content
-                    ? content.map((data, index) => {
-                        return <Post data={data} key={index} />;
-                      })
-                    : null}
-                </InfiniteScroll>
-              </div>
-              <nav>
-                <li></li>
-              </nav>
+  let { content, hasMoreItems, limitCount, skipCount } = props;
+  let postBy = props.categoryId;
+
+  return (
+    <div>
+      <title>Home</title>
+      <div className="container">
+        <div className="content">
+          <RightContiner history={props.history} />
+
+          <div className="content_lft">
+            {/* <Temp /> */}
+            {props.match.path === "/timeline" ? (
+              <Maintimeline history={props.history} />
+            ) : null}
+            {props.match.path === "/index" ? (
+              <Mainindex history={props.history} />
+            ) : null}
+            <div className="contnt_2">
+              <InfiniteScroll
+                pageStart={1}
+                loadMore={() => {
+                  loadMorePosts({
+                    postBy: postBy,
+                    skipCount: skipCount,
+                    limitCount: limitCount
+                  });
+                }}
+                hasMore={hasMoreItems}
+                style={{ width: "100%", height: "100%" }}
+                // threshold={1}
+                loader={
+                  <div key={0} style={{ height: "100%", width: "100%" }}>
+                    <h1>Loading...</h1>
+                  </div>
+                }
+              >
+                {content
+                  ? content.map((data, index) => {
+                      return <Post data={data} key={index} />;
+                    })
+                  : null}
+              </InfiniteScroll>
             </div>
+            <nav>
+              <li></li>
+            </nav>
           </div>
-          <div className="clear" />
         </div>
+        <div className="clear" />
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
+
 const mapStateToProps = (state, ownProps) => {
   return {
     content: state.post.postData,

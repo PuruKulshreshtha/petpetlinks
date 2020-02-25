@@ -192,7 +192,6 @@ class post extends PureComponent {
             </li> */}
                 <LIKEBUTTON
                   id={data._id}
-                  allPosts={this.props.allpost}
                   noOflikes={get(data, "like", []).length}
                 />
                 <li>

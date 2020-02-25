@@ -1,13 +1,11 @@
 import React, { Component } from "react";
-
+// import Webcam from "react-webcam";
 class ProfilePic extends Component {
   render() {
     return (
-      <div>
+      <div style={{ textAlign: "center" }}>
         <div className="popup1">
-          <h4 style={{ textAlign: "center" }}>
-            Profile Pic of {this.props.name}
-          </h4>
+          <h4 style={{ textAlign: "center" }}>{this.props.name}</h4>
           <div className="topright">
             <div onClick={this.props.closePopup}>
               <img
@@ -20,9 +18,10 @@ class ProfilePic extends Component {
           </div>
           <div
             style={{
-              // border: "10px solid white",
+              border: "2px dashed white",
+              borderRadius: "15px",
               width: "80%",
-              margin: "35px",
+              margin: "40px",
               height: "70%",
               padding: "20px"
             }}
@@ -45,3 +44,33 @@ class ProfilePic extends Component {
 }
 
 export default ProfilePic;
+
+// const videoConstraints = {
+//   width: 1280,
+//   height: 720,
+//   facingMode: "user"
+// };
+
+// const WebcamCapture = () => {
+//   const webcamRef = React.useRef(null);
+
+//   const capture = React.useCallback(() => {
+//     const imageSrc = webcamRef.current.getScreenshot();
+//   }, [webcamRef]);
+
+//   return (
+//     <div style={{ height: "100px", width: "100px" }}>
+//       <Webcam
+//         audio={false}
+//         height={1200}
+//         ref={webcamRef}
+//         screenshotFormat="image/jpeg"
+//         width={1500}
+//         videoConstraints={videoConstraints}
+//       />
+//       <button onClick={capture}>Capture photo</button>
+//     </div>
+//   );
+// };
+
+// export default WebcamCapture;

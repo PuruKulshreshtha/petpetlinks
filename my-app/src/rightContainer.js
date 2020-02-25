@@ -5,8 +5,9 @@ import callApi from "./api";
 import FEATURED_POST from "./Component/featured";
 import { connect } from "react-redux";
 import { post } from "./Redux/Action/postAction";
-import { categories } from "./Redux/Action/categoryAction";
 import store from "./Redux/store";
+import { loadMorePosts, defaultCategory } from "./helpers";
+
 const { ROUTES } = config;
 
 class RightContiner extends React.PureComponent {
@@ -105,15 +106,6 @@ class RightContiner extends React.PureComponent {
       });
   };
 
-  defaultCategory = () => {
-    callApi({ url: ROUTES.DEFAULT_CATEGORY }).then(response => {
-      let c_status = response.data.status;
-      const categoryArr = response.data.dataFromDatabase;
-
-      store.dispatch(categories(categoryArr, c_status));
-    });
-  };
-
   categoryForm = () => {
     return (
       <div>
@@ -139,42 +131,9 @@ class RightContiner extends React.PureComponent {
     );
   };
 
-  changeCategory = category => {
-    let postCounts = 0;
-    // console.log(category);
-    let postby = { categoryId: category };
-    callApi({ url: ROUTES.POST_COUNT, method: "POST", data: postby }).then(
-      resp => {
-        postCounts = resp.data.count;
-        // console.log(">>>>", postCounts);
-        let { skipCount, limitCount } = this.props;
-
-        if (skipCount > postCounts) {
-          store.dispatch(post([], postCounts, skipCount, false));
-          return;
-        } else {
-          let data = {
-            skipCount: skipCount,
-            limitCount: limitCount,
-            category: { categoryId: category }
-          };
-
-          // console.log(">>>>>DTAA IN category", data);
-          callApi({ url: ROUTES.ALL_POSTS, method: "POST", data: data }).then(
-            response => {
-              const content = response.data.dataFromDatabase;
-              // console.log("Content", content);
-
-              store.dispatch(post(content, postCounts, 0, true));
-            }
-          );
-        }
-      }
-    );
-  };
   componentDidMount() {
     if (localStorage.getItem("ID") !== null) {
-      this.defaultCategory();
+      defaultCategory();
     } else {
       this.props.history.push("/login");
     }
@@ -229,7 +188,7 @@ class RightContiner extends React.PureComponent {
                         <li key={index}>
                           <div
                             onClick={() =>
-                              this.props.loadMore({
+                              loadMorePosts({
                                 postBy: { categoryId: data._id },
                                 skipCount: 0
                               })
@@ -248,7 +207,7 @@ class RightContiner extends React.PureComponent {
                 <li>
                   <div
                     onClick={() => {
-                      this.props.loadMore({
+                      loadMorePosts({
                         postBy: {},
                         skipCount: 0
                       });
@@ -268,33 +227,6 @@ class RightContiner extends React.PureComponent {
               Featured Post
             </div>
             <div className="sub_dwn">
-              {/* {this.state.featuredPost
-                ? this.state.featuredPost.map(data => {
-                    return (
-                      <div key={data._id} className="feat_sec">
-                        <div className="feat_sec_img">
-                          <img
-                            src={
-                              SERVER_URL +
-                              "/" +
-                              get(data, "selectedFiles", "-----")
-                            }
-                            alt="ima"
-                          />
-                        </div>
-
-                        <div className="feat_txt">
-                          {get(data, "title", "----")}
-                        </div>
-                        <div className="btm_rgt">
-                          <div className="btm_arc">
-                            {get(data, "categoryId.category", "----")}
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })
-                : null} */}
               <FEATURED_POST getFeatured={this.state.getFeatured} />
             </div>
           </div>

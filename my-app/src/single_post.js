@@ -4,11 +4,13 @@ import Post from "./Component/post";
 import callApi from "./api";
 import { connect } from "react-redux";
 import RightContiner from "./rightContainer";
-import { singlePost, commentInc } from "./Redux/Action/postAction";
-import { comment, addComment } from "./Redux/Action/commentAction";
-
+import { commentInc } from "./Redux/Action/postAction";
+import { addComment } from "./Redux/Action/commentAction";
+import { defaultComments, posts } from "./helpers";
 import store from "./Redux/store";
 import isEmpty from "lodash/isEmpty";
+import CommentText from "./Component/comment/commentText";
+import NewComment from "./Component/newComment";
 
 const { ROUTES } = config;
 
@@ -35,26 +37,6 @@ class SinglePost extends React.Component {
     //console.log("this.props", this.props.match.params);
   }
 
-  defaultComments = () => {
-    callApi({
-      method: "POST",
-      data: this.props.match.params,
-      url: ROUTES.DEFAULT_COMMENTS
-    }).then(response => {
-      store.dispatch(comment(response.data.dataFromDatabase));
-      // console.log(">>>>>>>>>>.... default comments", this.props.commentArr);
-    });
-  };
-
-  posts = () => {
-    const id = this.props.match.params;
-    callApi({ method: "POST", data: id, url: ROUTES.SINGLE_POST }).then(
-      response => {
-        store.dispatch(singlePost(response.data));
-      }
-    );
-  };
-
   comment = e => {
     e.preventDefault();
     // console.log(">>>>>>>>>>>", e.target.comments.value);
@@ -71,7 +53,7 @@ class SinglePost extends React.Component {
             store.dispatch(addComment(response.data));
             // console.log(">>>>>>>>>", data.postId);
             store.dispatch(commentInc(data));
-            this.posts();
+            posts(this.props.match.params);
           }
           this.commentRef.current.value = "";
         }
@@ -87,8 +69,8 @@ class SinglePost extends React.Component {
       this.props.match.params.id != null
     ) {
       window.scrollTo(0, 0);
-      this.posts();
-      this.defaultComments();
+      posts(this.props.match.params);
+      defaultComments(this.props.match.params);
     } else {
       this.props.history.push("/login");
     }
@@ -105,7 +87,7 @@ class SinglePost extends React.Component {
               <RightContiner history={this.props.history} />
               <div className="content_lft">
                 {!isEmpty(content) ? (
-                  <Post data={content} key={content._id} allpost={this.posts} />
+                  <Post data={content} key={content._id} />
                 ) : null}
 
                 <div className="contnt_3">
@@ -117,56 +99,22 @@ class SinglePost extends React.Component {
                             this.monthMap[date.getMonth()]
                           },${date.getFullYear()}  ( ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()} )`;
                           return (
-                            <div key={index}>
-                              <li>
-                                <div className="list_image">
-                                  <div className="image_sec">
-                                    <img
-                                      src="/images/post_img.png"
-                                      alt="hello"
-                                    />
-                                  </div>
-                                  <div className="image_name">
-                                    {data.userId.username}
-                                  </div>
-                                </div>
-                                <div className="list_info">
-                                  {data.comment}
-                                  <span
-                                    style={{
-                                      float: "right",
-                                      color: "#a5a5a6"
-                                    }}
-                                  >
-                                    {"~ " + requiredDateString}
-                                  </span>
-                                </div>
-                              </li>
-                            </div>
+                            <CommentText
+                              data={data}
+                              requiredDateString={requiredDateString}
+                              index={index}
+                              key={index}
+                            />
                           );
                         })
                       : null}
                   </ul>
                   <ul>
-                    <li>
-                      <form onSubmit={this.comment}>
-                        <div className="cmnt_div1">
-                          <input
-                            ref={this.commentRef}
-                            type="text"
-                            name="comments"
-                            placeholder="Enter your Comment"
-                            className="cmnt_bx1"
-                            required
-                          />
-                          <input
-                            type="submit"
-                            className="sub_bttn1"
-                            defaultValue="Submit Comment"
-                          />
-                        </div>
-                      </form>
-                    </li>
+                    <NewComment
+                      comment={this.comment}
+                      commentRef={this.commentRef}
+                      key={0}
+                    />
                   </ul>
                   <div className="view_div">
                     <div>View more</div>

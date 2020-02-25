@@ -4,6 +4,7 @@ import config from "../config";
 import { withRouter } from "react-router-dom";
 import { like } from "../Redux/Action/postAction";
 import store from "../Redux/store";
+import { posts } from "../helpers";
 const { ROUTES } = config;
 
 class LikeButton extends React.PureComponent {
@@ -30,7 +31,8 @@ class LikeButton extends React.PureComponent {
       if (result) {
         store.dispatch(like(response.data));
       } else {
-        this.props.allPosts();
+        // console.log("heill", id);
+        posts(id);
       }
     });
   };
