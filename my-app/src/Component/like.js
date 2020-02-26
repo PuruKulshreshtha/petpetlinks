@@ -5,6 +5,9 @@ import { withRouter } from "react-router-dom";
 import { like } from "../Redux/Action/postAction";
 import store from "../Redux/store";
 import { posts } from "../helpers";
+
+// import { singlePost, filterfunc } from "../Redux/Action/postAction";
+
 const { ROUTES } = config;
 
 class LikeButton extends React.PureComponent {
@@ -24,15 +27,16 @@ class LikeButton extends React.PureComponent {
       url: ROUTES.LIKE,
       data: data
     }).then(response => {
-      //console.log("REs>", response);
+      console.log("REs>", response.data);
       let pathname = this.props.location.pathname;
       let result = ["/timeline", "/index"].includes(pathname);
       // console.log(result);
       if (result) {
         store.dispatch(like(response.data));
       } else {
-        // console.log("heill", id);
-        posts(id);
+        console.log("heill", id);
+        let data = { id: id };
+        posts(data);
       }
     });
   };

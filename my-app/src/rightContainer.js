@@ -9,14 +9,8 @@ import store from "./Redux/store";
 import { loadMorePosts, defaultCategory, getFileExtension } from "./helpers";
 import CategoryUpload from "./Component/categoryUpload";
 import Rightbtn from "./Component/right_btn";
-
+import { post } from "./Redux/Action/postAction";
 const { ROUTES } = config;
-const post = Loadable({
-  loader: () => import("./Redux/Action/postAction"),
-  loading() {
-    return <div>Loading ....... </div>;
-  }
-});
 class RightContiner extends React.PureComponent {
   constructor(props) {
     super(props);
