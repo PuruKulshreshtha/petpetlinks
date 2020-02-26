@@ -1,6 +1,9 @@
+import { withRouter } from "react-router-dom";
 import React from "react";
 import HeaderDropdwon from "./headerDropdown";
-const HeaderSmall = () => {
+
+const HeaderSmall = props => {
+  let pathname = props.location.pathname;
   return (
     <div className="navbar navbar-inverse navbar-fixed-top">
       <div className="navbar-inner">
@@ -16,7 +19,14 @@ const HeaderSmall = () => {
             <span className="icon-bar" />{" "}
           </button>
           <div className="brand">PPL</div>
-          <HeaderDropdwon />
+          {!["/signup", "/login", "/forget", "/verify/:id"].includes(
+            pathname
+          ) ? (
+            <HeaderDropdwon />
+          ) : (
+            void 0
+          )}
+
           <div className="nav-collapse collapse">
             <ul style={{ color: "white" }} className="nav">
               <li className="active">
@@ -47,4 +57,4 @@ const HeaderSmall = () => {
   );
 };
 
-export default HeaderSmall;
+export default withRouter(HeaderSmall);

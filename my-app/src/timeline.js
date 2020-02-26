@@ -5,6 +5,7 @@ import Mainindex from "./Main_Index";
 import Maintimeline from "./Main_timeline";
 import RightContiner from "./rightContainer";
 import InfiniteScroll from "react-infinite-scroller";
+// import InfiniteScroll from "react-infinite-scroll-component";
 import { loadMorePosts } from "./helpers";
 
 const Post = Loadable({
@@ -19,6 +20,7 @@ const Timeline = props => {
     if (localStorage.getItem("ID") !== null) {
       if (props.match.path === "/") {
         props.history.push("/index");
+        window.scrollTo(0, 0);
       }
     } else {
       props.history.push("/login");
@@ -55,8 +57,8 @@ const Timeline = props => {
                 }}
                 hasMore={hasMoreItems}
                 style={{ width: "100%", height: "100%" }}
-                // threshold={1}
-                loader={0}
+                threshold={0.002}
+                loader={<h4 key={0}>Loading...</h4>}
               >
                 {content
                   ? content.map((data, index) => {
@@ -64,6 +66,29 @@ const Timeline = props => {
                     })
                   : null}
               </InfiniteScroll>
+              {/* <InfiniteScroll
+                dataLength={8}
+                next={() => {
+                  loadMorePosts({
+                    postBy: postBy,
+                    skipCount: skipCount,
+                    limitCount: limitCount
+                  });
+                }}
+                hasMore={hasMoreItems}
+                endMessage={
+                  <p style={{ textAlign: "center" }}>
+                    <b>Yay! You have seen it all</b>
+                  </p>
+                }
+                loader={<h4>Loading...</h4>}
+              >
+                {content
+                  ? content.map((data, index) => {
+                      return <Post data={data} key={index} />;
+                    })
+                  : null}
+              </InfiniteScroll> */}
             </div>
             <nav>
               <li></li>
