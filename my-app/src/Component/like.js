@@ -27,7 +27,7 @@ class LikeButton extends React.PureComponent {
       url: ROUTES.LIKE,
       data: data
     }).then(response => {
-      console.log("REs>", response.data);
+      // console.log("REs>", response.data);
       let pathname = this.props.location.pathname;
       let result = ["/timeline", "/index"].includes(pathname);
       // console.log(result);

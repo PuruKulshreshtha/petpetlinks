@@ -36,7 +36,7 @@ export const filterfunc = filterData => {
 };
 
 export const commentInc = commentData => {
-  console.log("?>>>>>>>>>>>>>>>>>>>>>>>??????????????", commentData);
+  // console.log("?>>>>>>>>>>>>>>>>>>>>>>>??????????????", commentData);
   return {
     type: comment,
     commentData: commentData

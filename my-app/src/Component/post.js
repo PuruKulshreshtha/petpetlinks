@@ -7,7 +7,7 @@ import config from "../config";
 import ProfilePic from "./profilePic";
 const { ROUTES, SERVER_URL } = config;
 
-class post extends PureComponent {
+class Post extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -240,4 +240,4 @@ class post extends PureComponent {
   }
 }
 
-export default post;
+export default Post;

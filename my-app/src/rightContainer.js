@@ -1,5 +1,4 @@
 import React from "react";
-import Loadable from "react-loadable";
 import Popup from "./Component/popup";
 import config from "./config";
 import callApi from "./api";

@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import Loadable from "react-loadable";
+import Loadable from "@loadable/component";
 import { connect } from "react-redux";
 import Mainindex from "./Main_Index";
 import Maintimeline from "./Main_timeline";
@@ -7,13 +7,8 @@ import RightContiner from "./rightContainer";
 import InfiniteScroll from "react-infinite-scroller";
 // import InfiniteScroll from "react-infinite-scroll-component";
 import { loadMorePosts } from "./helpers";
-
-const Post = Loadable({
-  loader: () => import("./Component/post"),
-  loading() {
-    return <div>Loading ....... </div>;
-  }
-});
+// import Post from "./Component/post";
+const Post = Loadable(() => import("./Component/post"));
 
 const Timeline = props => {
   useEffect(() => {

@@ -16,24 +16,23 @@ class ProfilePic extends Component {
         }}
         onClick={this.props.closePopup}
       >
-        <div onClick={e => e.stopPropagation()} style={{ textAlign: "center" }}>
+        <div onClick={e => e.stopPropagation()}>
           <div className="popup1">
             <h4 style={{ textAlign: "center" }}>{this.props.name}</h4>
-            <div className="topright">
-              <div onClick={this.props.closePopup}>
-                <img
-                  height="20px"
-                  width="30px"
-                  alt="close"
-                  src="/images/close.ico"
-                ></img>
-              </div>
+
+            <div className="topright" onClick={this.props.closePopup}>
+              <img
+                height="20px"
+                width="30px"
+                alt="close"
+                src="/images/close.ico"
+              ></img>
             </div>
+
             <div
               style={{
                 border: "2px dashed white",
                 borderRadius: "15px",
-                width: "80%",
                 margin: "40px",
                 height: "70%",
                 padding: "20px"

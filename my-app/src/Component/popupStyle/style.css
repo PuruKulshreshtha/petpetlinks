@@ -55,9 +55,11 @@ input[type="checkbox"] select {
 .popup1 {
   position: fixed;
   width: 55%;
-  height: 450px;
-  top: 80px;
-  left: 300px;
+  height: 70%;
+  top: 15%;
+  left: 22%;
+  right: 0;
+  min-height: 450px;
   right: 0;
   text-align: center;
   justify-content: center;
