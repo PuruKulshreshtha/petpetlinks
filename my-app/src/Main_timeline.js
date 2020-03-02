@@ -3,7 +3,7 @@ import config from "./config";
 import callApi from "./api";
 import { get } from "lodash";
 import Dropzone from "react-dropzone";
-import { getFileExtension } from "./helpers";
+import { getFileExtension } from "./Redux/helpers";
 import CheckboxTimeline from "./Component/checkboxTimeline";
 const { ROUTES, SERVER_URL } = config;
 class Main_timeline extends React.Component {
@@ -45,7 +45,7 @@ class Main_timeline extends React.Component {
         this.defaultProfile();
       });
     } else {
-      alert("Invalid File format");
+      alert("Invalid image format");
     }
   };
 
@@ -64,9 +64,7 @@ class Main_timeline extends React.Component {
 
   render() {
     let name = localStorage.getItem("username");
-    if (name !== null) {
-      name = name.toUpperCase();
-    }
+    name = name ? name.toUpperCase() : "No name";
     let profilePic = get(this.state, "profilePic", "123.jpg");
     return (
       <div>

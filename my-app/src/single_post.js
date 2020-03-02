@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import RightContiner from "./rightContainer";
 import { commentInc } from "./Redux/Action/postAction";
 import { addComment } from "./Redux/Action/commentAction";
-import { defaultComments, posts } from "./helpers";
+import { defaultComments, posts } from "./Redux/helpers";
 import store from "./Redux/store";
 import isEmpty from "lodash/isEmpty";
 import CommentText from "./Component/comment/commentText";

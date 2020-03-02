@@ -1,5 +1,5 @@
 import React from "react";
-import { latest_first } from "../helpers";
+import { latest_first } from "../Redux/helpers";
 const IndexButton = props => {
   let { image, text, data } = props;
   return (

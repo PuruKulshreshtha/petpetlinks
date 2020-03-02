@@ -5,8 +5,9 @@ import Mainindex from "./Main_Index";
 import Maintimeline from "./Main_timeline";
 import RightContiner from "./rightContainer";
 import InfiniteScroll from "react-infinite-scroller";
+import store from "./Redux/store";
 // import InfiniteScroll from "react-infinite-scroll-component";
-import { loadMorePosts } from "./helpers";
+//import { loadMorePosts } from "./Redux/helpers";
 // import Post from "./Component/post";
 const Post = Loadable(() => import("./Component/post"));
 
@@ -40,15 +41,17 @@ const Timeline = props => {
             {props.match.path === "/index" ? (
               <Mainindex history={props.history} />
             ) : null}
-            <div className="contnt_2">
+            <div>
               <InfiniteScroll
                 pageStart={1}
                 loadMore={() => {
-                  loadMorePosts({
+                  store.dispatch({
+                    type: "loadMore",
                     postBy: postBy,
                     skipCount: skipCount,
                     limitCount: limitCount
                   });
+                  // loadMorePosts();
                 }}
                 hasMore={hasMoreItems}
                 style={{ width: "100%", height: "100%" }}

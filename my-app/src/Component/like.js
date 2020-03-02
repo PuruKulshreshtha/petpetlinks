@@ -4,19 +4,19 @@ import config from "../config";
 import { withRouter } from "react-router-dom";
 import { like } from "../Redux/Action/postAction";
 import store from "../Redux/store";
-import { posts } from "../helpers";
+import { posts } from "../Redux/helpers";
 
 // import { singlePost, filterfunc } from "../Redux/Action/postAction";
 
 const { ROUTES } = config;
 
-class LikeButton extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-  getlike = () => {
-    let { id } = this.props;
+const LikeButton = props => {
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {};
+  // }
+  const getlike = () => {
+    let { id } = props;
     const data = {
       id: id,
       dataUpadteToArray: localStorage.getItem("ID")
@@ -28,7 +28,7 @@ class LikeButton extends React.PureComponent {
       data: data
     }).then(response => {
       // console.log("REs>", response.data);
-      let pathname = this.props.location.pathname;
+      let pathname = props.location.pathname;
       let result = ["/timeline", "/index"].includes(pathname);
       // console.log(result);
       if (result) {
@@ -40,25 +40,23 @@ class LikeButton extends React.PureComponent {
       }
     });
   };
-
-  render() {
-    return (
-      <div>
-        <li>
-          <div
-            onClick={() => {
-              this.getlike();
-            }}
-          >
-            <span className="btn_icon">
-              <img src="/images/icon_003.png" alt="share" />
-            </span>
-            {this.props.noOflikes ? this.props.noOflikes : 0} Likes
-          </div>
-        </li>
-      </div>
-    );
-  }
-}
+  let { noOflikes } = props;
+  return (
+    <div>
+      <li>
+        <div
+          onClick={() => {
+            getlike();
+          }}
+        >
+          <span className="btn_icon">
+            <img src="/images/icon_003.png" alt="share" />
+          </span>
+          {noOflikes ? noOflikes : 0} Likes
+        </div>
+      </li>
+    </div>
+  );
+};
 
 export default withRouter(LikeButton);

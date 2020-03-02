@@ -5,7 +5,11 @@ import callApi from "./api";
 import FEATURED_POST from "./Component/featured";
 import { connect } from "react-redux";
 import store from "./Redux/store";
-import { loadMorePosts, defaultCategory, getFileExtension } from "./helpers";
+import {
+  loadMorePosts,
+  defaultCategory,
+  getFileExtension
+} from "./Redux/helpers";
 import CategoryUpload from "./Component/categoryUpload";
 import Rightbtn from "./Component/right_btn";
 import { post } from "./Redux/Action/postAction";
@@ -94,7 +98,8 @@ class RightContiner extends React.PureComponent {
     // console.log("hello", data);
     callApi({ method: "POST", url: ROUTES.CATEGORY_UPLOAD, data: data })
       .then(response => {
-        defaultCategory();
+        store.dispatch({ type: "defaultCategory" });
+        // defaultCategory();
         this.handleCategory();
         alert(response.data.status);
       })
@@ -107,7 +112,8 @@ class RightContiner extends React.PureComponent {
 
   componentDidMount() {
     if (localStorage.getItem("ID") !== null) {
-      defaultCategory();
+      // defaultCategory();
+      store.dispatch({ type: "defaultCategory" });
     } else {
       this.props.history.push("/login");
     }
@@ -155,12 +161,18 @@ class RightContiner extends React.PureComponent {
                       return (
                         <li key={index}>
                           <div
-                            onClick={() =>
-                              loadMorePosts({
+                            onClick={() => {
+                              store.dispatch({
+                                type: "loadMore",
                                 postBy: { categoryId: data._id },
                                 skipCount: 0
-                              })
-                            }
+                              });
+
+                              // loadMorePosts({
+                              //   postBy: { categoryId: data._id },
+                              //   skipCount: 0
+                              // })
+                            }}
                           >
                             <span className="list_icon">
                               <img src="/images/icon_03.png" alt="up" />
@@ -175,10 +187,15 @@ class RightContiner extends React.PureComponent {
                 <li>
                   <div
                     onClick={() => {
-                      loadMorePosts({
+                      store.dispatch({
+                        type: "loadMore",
                         postBy: {},
                         skipCount: 0
                       });
+                      // loadMorePosts({
+                      //   postBy: {},
+                      //   skipCount: 0
+                      // });
                     }}
                   >
                     <span className="list_icon">

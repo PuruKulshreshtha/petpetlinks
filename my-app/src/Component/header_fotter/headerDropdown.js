@@ -1,13 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { logout } from "../../helpers";
+import { logout } from "../../Redux/helpers";
 const HeaderDropdwon = () => {
   return (
     <div className="pro_info pull-right">
       <div className="pro_icn">
-        {" "}
         <Link to="/index">
-          {" "}
           <img src="/images/pic_small.png" alt="" />
         </Link>
       </div>
@@ -23,9 +21,11 @@ const HeaderDropdwon = () => {
         aria-labelledby="dLabel"
       >
         <li>
-          <div style={{ borderRadius: 10 }} tabIndex={-1}>
-            My Profile
-          </div>
+          <Link to="/index">
+            <div style={{ borderRadius: 10 }} tabIndex={-1}>
+              My Profile
+            </div>
+          </Link>
         </li>
         <li>
           <div style={{ borderRadius: 10 }} tabIndex={-1}>

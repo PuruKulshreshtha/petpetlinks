@@ -1,55 +1,54 @@
-import { post } from "./Redux/Action/postAction";
-import { categories } from "./Redux/Action/categoryAction";
-import { comment } from "./Redux/Action/commentAction";
-import { singlePost, filterfunc } from "./Redux/Action/postAction";
-import store from "./Redux/store";
+import { categories } from "./Action/categoryAction";
+import { comment } from "./Action/commentAction";
+import { singlePost, filterfunc } from "./Action/postAction";
+import store from "./store";
 import { get } from "lodash";
-import callApi from "./api";
-import config from "./config";
+import callApi from "../api";
+import config from "../config";
 const { ROUTES } = config;
 let isLoading = false;
 
-export const loadMorePosts = ({
-  postBy = {},
-  skipCount = 0,
-  limitCount = 6
-  // categoryId = this.props.categoryId
-}) => {
-  if (isLoading) {
-    return;
-  }
-  let postCounts = 0;
+// export const loadMorePosts = ({
+//   postBy = {},
+//   skipCount = 0,
+//   limitCount = 6
+//   // categoryId = this.props.categoryId
+// }) => {
+//   if (isLoading) {
+//     return;
+//   }
+//   let postCounts = 0;
 
-  // console.log(postBy, skipCount, limitCount);
-  isLoading = true;
-  callApi({ url: ROUTES.POST_COUNT, method: "POST", data: postBy }).then(
-    resp => {
-      postCounts = resp.data.count;
-      // console.log(">>>>>>>>>>>..post count", postCounts);
-      if (skipCount > postCounts) {
-        // console.log("qqqqqqqqqq");
+//   // console.log(postBy, skipCount, limitCount);
+//   isLoading = true;
+//   callApi({ url: ROUTES.POST_COUNT, method: "POST", data: postBy }).then(
+//     resp => {
+//       postCounts = resp.data.count;
+//       // console.log(">>>>>>>>>>>..post count", postCounts);
+//       if (skipCount > postCounts) {
+//         // console.log("qqqqqqqqqq");
 
-        isLoading = false;
-        store.dispatch(post([], postCounts, skipCount, false, postBy));
-        return;
-      } else {
-        let data = {
-          skipCount: skipCount,
-          limitCount: limitCount,
-          categoryId: get(postBy, "categoryId", null)
-        };
-        callApi({ url: ROUTES.ALL_POSTS, method: "POST", data: data }).then(
-          response => {
-            const content = response.data.dataFromDatabase;
-            // console.log(content);
-            isLoading = false;
-            store.dispatch(post(content, postCounts, skipCount, true, postBy));
-          }
-        );
-      }
-    }
-  );
-};
+//         isLoading = false;
+//         store.dispatch(post([], postCounts, skipCount, false, postBy));
+//         return;
+//       } else {
+//         let data = {
+//           skipCount: skipCount,
+//           limitCount: limitCount,
+//           categoryId: get(postBy, "categoryId", null)
+//         };
+//         callApi({ url: ROUTES.ALL_POSTS, method: "POST", data: data }).then(
+//           response => {
+//             const content = response.data.dataFromDatabase;
+//             // console.log(content);
+//             isLoading = false;
+//             store.dispatch(post(content, postCounts, skipCount, true, postBy));
+//           }
+//         );
+//       }
+//     }
+//   );
+// };
 
 export const defaultCategory = () => {
   callApi({ url: ROUTES.DEFAULT_CATEGORY }).then(response => {
@@ -88,7 +87,8 @@ export const categoryUploadHandler = e => {
   // console.log("hello", data);
   callApi({ method: "POST", url: ROUTES.CATEGORY_UPLOAD, data: data })
     .then(response => {
-      defaultCategory();
+      store.dispatch({ type: "defaultCategory" });
+      //defaultCategory();
 
       alert(response.data.status);
     })

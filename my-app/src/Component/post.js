@@ -91,7 +91,7 @@ class Post extends PureComponent {
     },${date.getFullYear()}  ( ${time} )`;
 
     return (
-      <div>
+      <div className="contnt_2">
         {this.state.profilePopup ? (
           <ProfilePic
             closePopup={this.togglePopup}
@@ -209,7 +209,13 @@ class Post extends PureComponent {
             {this.state.toggleShare && data._id === this.state.opendedId ? (
               <form
                 onSubmit={e =>
-                  this.share(data._id, localStorage.getItem("username"), e)
+                  this.share(
+                    data._id,
+                    localStorage.getItem("username")
+                      ? localStorage.getItem("username")
+                      : "No name",
+                    e
+                  )
                 }
               >
                 <input
