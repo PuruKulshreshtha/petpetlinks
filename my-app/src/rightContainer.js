@@ -5,11 +5,7 @@ import callApi from "./api";
 import FEATURED_POST from "./Component/featured";
 import { connect } from "react-redux";
 import store from "./Redux/store";
-import {
-  loadMorePosts,
-  defaultCategory,
-  getFileExtension
-} from "./Redux/helpers";
+import { getFileExtension } from "./Redux/helpers";
 import CategoryUpload from "./Component/categoryUpload";
 import Rightbtn from "./Component/right_btn";
 import { post } from "./Redux/Action/postAction";
@@ -93,21 +89,23 @@ class RightContiner extends React.PureComponent {
   categoryUploadHandler = e => {
     e.preventDefault();
     const data = {
-      cname: e.target.newCategory.value
+      cname: e.target.newCategory.value.trim()
     };
     // console.log("hello", data);
-    callApi({ method: "POST", url: ROUTES.CATEGORY_UPLOAD, data: data })
-      .then(response => {
-        store.dispatch({ type: "defaultCategory" });
-        // defaultCategory();
-        this.handleCategory();
-        alert(response.data.status);
-      })
-      .catch(err => {
-        if (err.message === "Network Error") {
-          this.props.history.push("/err");
-        }
-      });
+    if (e.target.newCategory.value.trim() !== "") {
+      callApi({ method: "POST", url: ROUTES.CATEGORY_UPLOAD, data: data })
+        .then(response => {
+          store.dispatch({ type: "defaultCategory" });
+          // defaultCategory();
+          this.handleCategory();
+          alert(response.data.status);
+        })
+        .catch(err => {
+          if (err.message === "Network Error") {
+            this.props.history.push("/err");
+          }
+        });
+    }
   };
 
   componentDidMount() {

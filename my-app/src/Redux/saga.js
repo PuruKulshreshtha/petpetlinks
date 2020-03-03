@@ -2,7 +2,7 @@ import { post } from "./Action/postAction";
 import { call, takeEvery } from "redux-saga/effects";
 import { categories } from "./Action/categoryAction";
 import { comment } from "./Action/commentAction";
-import { singlePost, filterfunc } from "./Action/postAction";
+import { singlePost } from "./Action/postAction";
 import store from "./store";
 import { get } from "lodash";
 import callApi from "../api";
@@ -61,8 +61,30 @@ function* defaultCategory() {
 
   store.dispatch(categories(categoryArr, c_status));
 }
+function* defaultComments(id) {
+  const response = yield call(callApi, {
+    method: "POST",
+    data: id.id,
+    url: ROUTES.DEFAULT_COMMENTS
+  });
+  store.dispatch(comment(response.data.dataFromDatabase));
+  // console.log(">>>>>>>>>>.... default comments", this.props.commentArr);
+}
+
+function* posts(id) {
+  // const id = this.props.match.params;
+  // console.log(id);
+  const response = yield call(callApi, {
+    method: "POST",
+    data: id.id,
+    url: ROUTES.SINGLE_POST
+  });
+  store.dispatch(singlePost(response.data));
+}
 
 export default function* rootSaga() {
   yield takeEvery("loadMore", loadMorePosts);
-  yield takeEvery("defaultCategory", defaultCategory);
+  yield takeEvery("defaultCategory", defaultCategory); //defaultComments
+  yield takeEvery("defaultComments", defaultComments); //defaultComments
+  yield takeEvery("posts", posts);
 }

@@ -34,8 +34,9 @@ const LikeButton = props => {
       if (result) {
         store.dispatch(like(response.data));
       } else {
-        console.log("heill", id);
+        // console.log("heill", id);
         let data = { id: id };
+        // store.dispatch({ type: "posts", data });
         posts(data);
       }
     });

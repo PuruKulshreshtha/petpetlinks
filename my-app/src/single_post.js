@@ -1,12 +1,13 @@
 import React from "react";
 import config from "./config";
 import Post from "./Component/post";
+import { newComment } from "./Redux/Constant";
 import callApi from "./api";
 import { connect } from "react-redux";
 import RightContiner from "./rightContainer";
 import { commentInc } from "./Redux/Action/postAction";
-import { addComment } from "./Redux/Action/commentAction";
-import { defaultComments, posts } from "./Redux/helpers";
+// import { addComment } from "./Redux/Action/commentAction";
+// import { posts } from "./Redux/helpers";
 import store from "./Redux/store";
 import isEmpty from "lodash/isEmpty";
 import CommentText from "./Component/comment/commentText";
@@ -39,10 +40,12 @@ class SinglePost extends React.Component {
 
   comment = e => {
     e.preventDefault();
-    // console.log(">>>>>>>>>>>", e.target.comments.value);
-    if (e.target.comments.value !== "") {
+    let { addComment } = this.props;
+    // console.log(">>>>>>>>>>>", e.target.comments.value.trim());
+
+    if (e.target.comments.value.trim() !== "") {
       const data = {
-        comment: e.target.comments.value,
+        comment: e.target.comments.value.trim(),
         userId: localStorage.getItem("ID"),
         postId: this.props.content[0]._id
       };
@@ -50,10 +53,12 @@ class SinglePost extends React.Component {
       callApi({ method: "POST", url: ROUTES.COMMENT_SAVE, data: data }).then(
         response => {
           if (response) {
-            store.dispatch(addComment(response.data));
+            addComment(response.data);
+            // store.dispatch(addComment(response.data));
             // console.log(">>>>>>>>>", data.postId);
             store.dispatch(commentInc(data));
-            posts(this.props.match.params);
+            store.dispatch({ type: "posts", id: this.props.match.params });
+            // posts(this.props.match.params);
           }
           this.commentRef.current.value = "";
         }
@@ -69,8 +74,10 @@ class SinglePost extends React.Component {
       this.props.match.params.id != null
     ) {
       window.scrollTo(0, 0);
-      posts(this.props.match.params);
-      defaultComments(this.props.match.params);
+      // posts(this.props.match.params);
+      store.dispatch({ type: "posts", id: this.props.match.params });
+      store.dispatch({ type: "defaultComments", id: this.props.match.params });
+      //defaultComments(this.props.match.params);
     } else {
       this.props.history.push("/login");
     }
@@ -127,6 +134,11 @@ class SinglePost extends React.Component {
     );
   }
 }
+const mapDispatchToProps = dispatch => {
+  return {
+    addComment: commentArr => dispatch({ type: newComment, commentArr })
+  };
+};
 const mapStateToProps = (state, ownProps) => {
   //console.log("?>>>>>>>>>>>>>>>?????????????????????????", state.post.postData);
   return {
@@ -134,4 +146,4 @@ const mapStateToProps = (state, ownProps) => {
     commentArr: state.comment.commentArr
   };
 };
-export default connect(mapStateToProps)(SinglePost);
+export default connect(mapStateToProps, mapDispatchToProps)(SinglePost);

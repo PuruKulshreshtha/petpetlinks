@@ -23,7 +23,6 @@ const Main = () => (
       <Route path={"/changePassword/:id"} component={ChangePassword} />
       <Route path={"/verify/:id"} component={VerifyPage} />
       <Route path="/err" component={Error} />
-
       <Route path="*" component={Login} />
     </Switch>
   </main>

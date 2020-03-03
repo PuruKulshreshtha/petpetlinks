@@ -1,12 +1,12 @@
-import { categories } from "./Action/categoryAction";
-import { comment } from "./Action/commentAction";
+// import { categories } from "./Action/categoryAction";
+// import { comment } from "./Action/commentAction";
 import { singlePost, filterfunc } from "./Action/postAction";
 import store from "./store";
-import { get } from "lodash";
+// import { get } from "lodash";
 import callApi from "../api";
 import config from "../config";
 const { ROUTES } = config;
-let isLoading = false;
+// let isLoading = false;
 
 // export const loadMorePosts = ({
 //   postBy = {},
@@ -50,25 +50,25 @@ let isLoading = false;
 //   );
 // };
 
-export const defaultCategory = () => {
-  callApi({ url: ROUTES.DEFAULT_CATEGORY }).then(response => {
-    let c_status = response.data.status;
-    const categoryArr = response.data.dataFromDatabase;
+// export const defaultCategory = () => {
+//   callApi({ url: ROUTES.DEFAULT_CATEGORY }).then(response => {
+//     let c_status = response.data.status;
+//     const categoryArr = response.data.dataFromDatabase;
 
-    store.dispatch(categories(categoryArr, c_status));
-  });
-};
+//     store.dispatch(categories(categoryArr, c_status));
+//   });
+// };
 
-export const defaultComments = id => {
-  callApi({
-    method: "POST",
-    data: id,
-    url: ROUTES.DEFAULT_COMMENTS
-  }).then(response => {
-    store.dispatch(comment(response.data.dataFromDatabase));
-    // console.log(">>>>>>>>>>.... default comments", this.props.commentArr);
-  });
-};
+// export const defaultComments = id => {
+//   callApi({
+//     method: "POST",
+//     data: id,
+//     url: ROUTES.DEFAULT_COMMENTS
+//   }).then(response => {
+//     store.dispatch(comment(response.data.dataFromDatabase));
+//     // console.log(">>>>>>>>>>.... default comments", this.props.commentArr);
+//   });
+// };
 
 export const posts = id => {
   // const id = this.props.match.params;
