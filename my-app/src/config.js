@@ -1,5 +1,5 @@
 export default {
-  SERVER_URL: "http://192.168.100.175:8088",
+  SERVER_URL: "http://192.168.100.121:8088",
   ROUTES: {
     PROFILE_PIC: "pic/profile",
     DEFAULT_PIC: "pic/default",

@@ -3,7 +3,6 @@ import CheckboxTimeline from "./Component/checkboxTimeline";
 import IndexButton from "./Component/indexButton";
 
 const Main_Index = props => {
-  window.scrollTo(0, 0);
   return (
     <div>
       <CheckboxTimeline />
